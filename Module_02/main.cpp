@@ -13,12 +13,32 @@ void Intro()
 
 void Varibles()
 {
+	std::cout << "void Varibles()\n";
 	int a = 4;
 	std::cout << "a = " << a << std::endl;
 	int b = 14;
-	std::cout << "a = " << b << std::endl;
+	std::cout << "b = " << b << std::endl;
 	int c = 114;
-	std::cout << "a = " << c << std::endl;
+	std::cout << "c = " << c << std::endl;
+	std::cout << "a + b + c = " << a + b + c << std::endl;
+	std::cout << "a - b - c = " << a - b - c << std::endl;
+	std::cout << "a * b * c = " << a * b * c << std::endl;
+	std::cout << "a / b / c = " << a / b / c << std::endl;
+}
+
+void ConstVaribles()
+{
+	std::cout << "void ConstVaribles()\n";
+	const int a = 4;
+	std::cout << "a = " << a << std::endl;
+	const int b = 14;
+	std::cout << "b = " << b << std::endl;
+	const int c = 114;
+	std::cout << "c = " << c << std::endl;
+	std::cout << "a + b + c = " << a + b + c << std::endl;
+	std::cout << "a - b - c = " << a - b - c << std::endl;
+	std::cout << "a * b * c = " << a * b * c << std::endl;
+	std::cout << "a / b / c = " << a / b / c << std::endl;
 }
 
 int main(void)
@@ -26,5 +46,6 @@ int main(void)
 	//HelloWorld();
 	Intro();
 	Varibles();
+	ConstVaribles();
 	return (0);
 }
