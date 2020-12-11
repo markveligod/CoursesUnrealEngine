@@ -23,10 +23,10 @@ The course aim to learn base c++ language and him use in Unreal Engine 4. The co
 The module is an introduction to course and show information about support on forums, discord, twitter and facebook. Also the module tell you about CEO GameDev.tv and him teams. The module help to you setup all necessary tools which will you need in the next modules. Be careful...  
 
 ### :black_square_button: 2. Triple X - Write Pure C++.  
-- [x](Test #1: Triple X Mid-section Quiz)  
+- [x] (Test #1: Triple X Mid-section Quiz)  
 The test include some part module: Variable, const Variable, include, declared statement, expression statements and comments.  
   
-- [ ](Test #2: Triple X Mid-section Quiz)  
+- [ ] (Test #2: Triple X Mid-section Quiz)  
   
 ### :black_square_button: 3. Bulls & Cows.  
 (very soon)  
