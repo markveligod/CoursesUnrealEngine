@@ -33,6 +33,10 @@ The test include some part module: naming and self documenting code, using if an
 The test include some part module: function parameters, comparing values, generating random numbers and etc.
   
 ### :black_square_button: 3. Bulls & Cows.  
+- [x] (Test #4: Mid-section Quiz)  
+The test include some part module: Interfeice UE4, controlling the viewport, Actors, Landscape and etc.  
+  
+### :black_square_button: 4. Building Escape.  
 (very soon)  
 
 ## Other
