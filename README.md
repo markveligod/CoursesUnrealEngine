@@ -29,8 +29,8 @@ The test include some part module: Variable, const Variable, include, declared s
 - [x] (Test #2: Triple X Mid-section Quiz)  
 The test include some part module: naming and self documenting code, using if and else statements, functions and etc.  
   
-- [ ] (Test #3: Triple X End-section Quiz)  
-(very soon)  
+- [x] (Test #3: Triple X End-section Quiz)  
+The test include some part module: function parameters, comparing values, generating random numbers and etc.
   
 ### :black_square_button: 3. Bulls & Cows.  
 (very soon)  
