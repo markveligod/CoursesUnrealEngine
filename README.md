@@ -38,6 +38,9 @@ The test include some part module: Interfeice UE4, controlling the viewport, Act
 
 - [x] (Test #5: Mid-section Quiz)  
 The test include some part module: Actors and Components, FString type, Macro TEXT and etc.  
+
+- [x] (Test #6: Mid-section Quiz)  
+The test include some part module: Members variable, pseude code, full game loop and etc.  
   
 ### :black_square_button: 4. Building Escape.  
 (very soon)  
