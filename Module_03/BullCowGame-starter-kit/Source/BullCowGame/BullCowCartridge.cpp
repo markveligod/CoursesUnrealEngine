@@ -23,6 +23,11 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
             PrintLine(TEXT("Please enter 4 char of word!"));
             return ;
         }
+        if (!(this->IsIsogram(Input)))
+        {
+            PrintLine(TEXT("Please enter 4 char lower!"));
+            return ;
+        }
         this->Calculate(Input);
         PrintLine(FString::Printf(TEXT("Bull: %i\nCow: %i"), this->Bull, this->Cow));
         if (this->Bull == 4 && this->Cow == 0)
@@ -103,4 +108,16 @@ void UBullCowCartridge::Calculate(const FString& Input)
             }
         }
     }
+}
+
+bool UBullCowCartridge::IsIsogram(const FString& Input) const
+{
+    for (size_t i = 0; i < Input.Len(); i++)
+    {
+        if (isupper(Input[i]))
+        {
+            return (false);
+        }
+    }
+    return (true);
 }

@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <cctype> //isupper
 #include "CoreMinimal.h"
 #include "Console/Cartridge.h"
 #include "BullCowCartridge.generated.h"
@@ -18,6 +19,7 @@ class BULLCOWGAME_API UBullCowCartridge : public UCartridge
 		void InitGame();
 		void EndGame();
 		void Calculate(const FString& Input);
+		bool IsIsogram(const FString& Input) const;
 
 	// Your declarations go below!
 	private:
