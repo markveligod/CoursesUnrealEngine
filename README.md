@@ -41,6 +41,9 @@ The test include some part module: Actors and Components, FString type, Macro TE
 
 - [x] (Test #6: Mid-section Quiz)  
 The test include some part module: Members variable, pseude code, full game loop and etc.  
+
+- [x] (Test #7: Mid-section Quiz)  
+The test include some part module: Parameters and Arguments, Pre vs Post Increment / Decrement, Booleans, formatting FString, dot operator and etc.  
   
 ### :black_square_button: 4. Building Escape.  
 (very soon)  
