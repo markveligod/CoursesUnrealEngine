@@ -25,7 +25,7 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
         }
         if (!(this->IsIsogram(Input)))
         {
-            PrintLine(TEXT("Please enter 4 char lower!"));
+            PrintLine(TEXT("Please enter word without duplicate characters!"));
             return ;
         }
         this->Calculate(Input);
@@ -92,9 +92,9 @@ void UBullCowCartridge::EndGame()
 //Warning! maybe dont work with duplicate letters
 void UBullCowCartridge::Calculate(const FString& Input)
 {
-    for (size_t i = 0; i < 4; i++)
+    for (int32 i = 0; i < 4; i++)
     {
-        for (size_t j = 0; j < 4; j++)
+        for (int32 j = 0; j < 4; j++)
         {
             if (Input[i] == this->HiddenWord[j] && i == j)
             {
@@ -112,11 +112,13 @@ void UBullCowCartridge::Calculate(const FString& Input)
 
 bool UBullCowCartridge::IsIsogram(const FString& Input) const
 {
-    for (size_t i = 0; i < Input.Len(); i++)
+    int32 size = Input.Len();
+    for (int32 i = 0; i < size; i++)
     {
-        if (isupper(Input[i]))
+        for (int32 j = i + 1; j < size; j++)
         {
-            return (false);
+            if (Input[i] == Input[j])
+                return (false);
         }
     }
     return (true);

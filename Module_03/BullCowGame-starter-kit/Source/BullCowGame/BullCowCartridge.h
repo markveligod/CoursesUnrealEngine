@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include <cctype> //isupper
 #include "CoreMinimal.h"
 #include "Console/Cartridge.h"
 #include "BullCowCartridge.generated.h"
@@ -24,9 +23,9 @@ class BULLCOWGAME_API UBullCowCartridge : public UCartridge
 	// Your declarations go below!
 	private:
 		FString HiddenWord;
-		int16 lives;
-		int16 Cow;
-		int16 Bull;
+		int32 lives;
+		int32 Cow;
+		int32 Bull;
 		bool bGameOver;
 	
 };
