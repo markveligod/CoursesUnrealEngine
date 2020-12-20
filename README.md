@@ -44,6 +44,9 @@ The test include some part module: Members variable, pseude code, full game loop
 
 - [x] (Test #7: Mid-section Quiz)  
 The test include some part module: Parameters and Arguments, Pre vs Post Increment / Decrement, Booleans, formatting FString, dot operator and etc.  
+
+- [x] (Test #8: Mid-section Quiz)  
+The test include some part module: const member functions, TArrays, ranged base loop, collections and etc.  
   
 ### :black_square_button: 4. Building Escape.  
 (very soon)  
