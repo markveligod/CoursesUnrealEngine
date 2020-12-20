@@ -18,32 +18,27 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
     }
     else
     {
-        if (Input.Len() != 4)
-        {
-            PrintLine(TEXT("Please enter 4 char of word!"));
-            return ;
-        }
         if (!(this->IsIsogram(Input)))
         {
             PrintLine(TEXT("Please enter word without duplicate characters!"));
             return ;
         }
         this->Calculate(Input);
-        PrintLine(FString::Printf(TEXT("Bull: %i\nCow: %i"), this->Bull, this->Cow));
-        if (this->Bull == 4 && this->Cow == 0)
+        PrintLine(TEXT("Bull: %i\nCow: %i"), this->Bull, this->Cow);
+        if (this->Bull == this->HiddenWord.Len() && this->Cow == 0)
         {
             PrintLine(TEXT("You Win!!!"));
-            PrintLine(FString::Printf(TEXT("Is %s"), *(this->HiddenWord)));
+            PrintLine(TEXT("Is %s"), *(this->HiddenWord));
             this->EndGame();
         }
         else
         {
             this->lives--;
-            PrintLine(FString::Printf(TEXT("Lives: %i"), this->lives));
+            PrintLine(TEXT("Lives: %i"), this->lives);
             if (this->lives == 0)
             {
                 PrintLine(TEXT("You Lose!!!"));
-                PrintLine(FString::Printf(TEXT("Is %s"), *(this->HiddenWord)));
+                PrintLine(TEXT("Is %s"), *(this->HiddenWord));
                 this->EndGame();
             }
             else
@@ -58,16 +53,7 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
 
 FString UBullCowCartridge::GenStr()
 {
-    TArray<FString> str;
-    str.Add(TEXT("cake"));
-    str.Add(TEXT("bike"));
-    str.Add(TEXT("bear"));
-    str.Add(TEXT("rose"));
-    str.Add(TEXT("road"));
-    str.Add(TEXT("year"));
-    str.Add(TEXT("kite"));
-    str.Add(TEXT("wine"));
-    return (str[rand() % (str.Num() - 1)]);
+    return (HiddenWordsArray[rand() % (HiddenWordsArray.Num() - 1)]);
 }
 
 void UBullCowCartridge::InitGame()
@@ -78,7 +64,7 @@ void UBullCowCartridge::InitGame()
     this->Cow = 0;
     this->bGameOver = false;
     PrintLine(TEXT("Welcome to BULL COWS"));
-    PrintLine(TEXT("Guess the 4 letter word"));
+    PrintLine(TEXT("Guess the %i letter word"), this->HiddenWord.Len());
     PrintLine(TEXT("Press enter you word..."));
 }
 
@@ -90,11 +76,11 @@ void UBullCowCartridge::EndGame()
 }
 
 //Warning! maybe dont work with duplicate letters
-void UBullCowCartridge::Calculate(const FString& Input)
+void UBullCowCartridge::Calculate(FString Input)
 {
-    for (int32 i = 0; i < 4; i++)
+    for (int32 i = 0; i < Input.Len(); i++)
     {
-        for (int32 j = 0; j < 4; j++)
+        for (int32 j = 0; j < this->HiddenWord.Len(); j++)
         {
             if (Input[i] == this->HiddenWord[j] && i == j)
             {
@@ -110,7 +96,7 @@ void UBullCowCartridge::Calculate(const FString& Input)
     }
 }
 
-bool UBullCowCartridge::IsIsogram(const FString& Input) const
+bool UBullCowCartridge::IsIsogram(FString Input) const
 {
     int32 size = Input.Len();
     for (int32 i = 0; i < size; i++)

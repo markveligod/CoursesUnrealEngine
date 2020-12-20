@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Console/Cartridge.h"
+#include "HiddenWordArray.h"
 #include "BullCowCartridge.generated.h"
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -17,8 +18,8 @@ class BULLCOWGAME_API UBullCowCartridge : public UCartridge
 		FString GenStr();
 		void InitGame();
 		void EndGame();
-		void Calculate(const FString& Input);
-		bool IsIsogram(const FString& Input) const;
+		void Calculate(FString Input);
+		bool IsIsogram(FString Input) const;
 
 	// Your declarations go below!
 	private:
