@@ -32,7 +32,7 @@ The test include some part module: naming and self documenting code, using if an
 - [x] (Test #3: Triple X End-section Quiz)  
 The test include some part module: function parameters, comparing values, generating random numbers and etc.
   
-### :black_square_button: 3. Bulls & Cows.  
+### :heavy_check_mark: 3. Bulls & Cows.  
 - [x] (Test #4: Mid-section Quiz)  
 The test include some part module: Interfeice UE4, controlling the viewport, Actors, Landscape and etc.  
 
@@ -49,7 +49,8 @@ The test include some part module: Parameters and Arguments, Pre vs Post Increme
 The test include some part module: const member functions, TArrays, ranged base loop, collections and etc.  
   
 ### :black_square_button: 4. Building Escape.  
-(very soon)  
+- [x] (Test #9: Mid-section Quiz)  
+The test include some part module: classes, pointer, workspace and etc.  
 
 ## Other
 **Author:**  
