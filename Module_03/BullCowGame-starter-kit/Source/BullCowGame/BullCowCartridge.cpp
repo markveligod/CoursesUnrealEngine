@@ -4,7 +4,6 @@
 void UBullCowCartridge::BeginPlay() // When the game starts
 {
     Super::BeginPlay();
-    srand(time(nullptr));
     this->InitGame();
 }
 
@@ -53,7 +52,7 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
 
 FString UBullCowCartridge::GenStr()
 {
-    return (HiddenWordsArray[rand() % (HiddenWordsArray.Num() - 1)]);
+    return (HiddenWordsArray[FMath::RandRange(0, HiddenWordsArray.Num() - 1)]);
 }
 
 void UBullCowCartridge::InitGame()
@@ -88,7 +87,7 @@ void UBullCowCartridge::Calculate(FString Input)
             }
             else if (Input[i] == this->HiddenWord[j] && i != j)
             {
-                if (Input[i] == this->HiddenWord[j - 1])
+                if ((j - 1 >= 0) && Input[i] == this->HiddenWord[j - 1])
                     continue ;
                 this->Cow++;
             }
