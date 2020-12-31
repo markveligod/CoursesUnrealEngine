@@ -51,6 +51,8 @@ The test include some part module: const member functions, TArrays, ranged base 
 ### :black_square_button: 4. Building Escape.  
 - [x] (Test #9: Mid-section Quiz)  
 The test include some part module: classes, pointer, workspace and etc.  
+- [x] (Test #10: Mid-section Quiz)  
+The test include some part module: actor, defualt map&level, dot/pointer and etc.
 
 ## Other
 **Author:**  
