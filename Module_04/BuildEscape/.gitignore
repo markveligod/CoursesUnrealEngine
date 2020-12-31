@@ -76,10 +76,9 @@ Plugins/*/Intermediate/*
 # Cache files for the editor to use
 DerivedDataCache/*
 
-# Content Ignored
+# Starter Content Ignored
 
 Content/StarterContent/*
-Content/Bunker
 
 VSCode Files
 /.vscode/*

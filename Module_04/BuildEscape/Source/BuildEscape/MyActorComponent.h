@@ -8,7 +8,7 @@
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class BUILDINGESCAPE_API UMyActorComponent : public UActorComponent
+class BUILDESCAPE_API UMyActorComponent : public UActorComponent
 {
 	GENERATED_BODY()
 

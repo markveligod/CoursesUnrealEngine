@@ -3,12 +3,12 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class BuildingEscapeTarget : TargetRules
+public class BuildEscapeTarget : TargetRules
 {
-	public BuildingEscapeTarget( TargetInfo Target) : base(Target)
+	public BuildEscapeTarget( TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
-		ExtraModuleNames.AddRange( new string[] { "BuildingEscape" } );
+		ExtraModuleNames.AddRange( new string[] { "BuildEscape" } );
 	}
 }

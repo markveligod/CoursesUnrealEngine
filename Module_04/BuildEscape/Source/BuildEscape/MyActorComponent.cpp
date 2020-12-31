@@ -2,6 +2,7 @@
 
 
 #include "MyActorComponent.h"
+#include "GameFramework/Actor.h"
 
 // Sets default values for this component's properties
 UMyActorComponent::UMyActorComponent()
@@ -18,6 +19,13 @@ UMyActorComponent::UMyActorComponent()
 void UMyActorComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	FString ptr = GetOwner()->GetName();
+	UE_LOG(LogTemp, Warning, TEXT("Name: %s"), *ptr)
+	FString ObjectPos = GetOwner()->GetActorLocation().ToString();
+	UE_LOG(LogTemp, Warning, TEXT("Pos: %s"), *ObjectPos)
+	FString ObjectTransform = GetOwner()->GetActorTransform().GetLocation().ToString();
+	UE_LOG(LogTemp, Warning, TEXT("Transform: %s"), *ObjectTransform)
 
 	// ...
 	
