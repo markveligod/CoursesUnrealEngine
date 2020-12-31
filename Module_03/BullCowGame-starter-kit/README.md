@@ -13,4 +13,4 @@ For example, if the secret word is HEAT, a guess of COIN would result in "0 Bull
 ## Gameplay
 The main type of game is a terminal that begins to respond to the keyboard after pressing the TAB button. The training project is part of the training provided by GameDev.tv Team  
   
-<img src="https://github.com/markveligod/CoursesUnrealEngine/raw/master/Module_03/BullCowGame-starter-kit/img/1.png">  
+<img src="img/1.png">  
