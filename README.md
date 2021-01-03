@@ -52,7 +52,9 @@ The test include some part module: const member functions, TArrays, ranged base 
 - [x] (Test #9: Mid-section Quiz)  
 The test include some part module: classes, pointer, workspace and etc.  
 - [x] (Test #10: Mid-section Quiz)  
-The test include some part module: actor, defualt map&level, dot/pointer and etc.
+The test include some part module: actor, defualt map&level, dot/pointer and etc.  
+- [x] (Test #11: Mid-section Quiz)  
+The test include some part module: light, BSP geometry, GetOwner() and etc.  
 
 ## Other
 **Author:**  
