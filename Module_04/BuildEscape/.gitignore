@@ -78,7 +78,7 @@ DerivedDataCache/*
 
 # Starter Content Ignored
 
-Content/StarterContent/*
+Content/*
 
 VSCode Files
 /.vscode/*
