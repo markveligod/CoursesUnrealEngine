@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Engine/TriggerVolume.h"
 #include "Components/ActorComponent.h"
 #include "OpenDoor.generated.h"
 
@@ -24,7 +25,17 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	void OpenDoorRun(float DeltaTime);
+
 private:
-	float TargetYaw = 90.f;
-		
+	UPROPERTY(EditAnywhere)
+	float RollValue = 88.f;
+	float TargetEndYaw;
+	FRotator OpenDoor;
+
+	UPROPERTY(EditAnywhere)
+	ATriggerVolume* PressurePlate;
+
+	UPROPERTY(EditAnywhere)
+	AActor *ActorPawn;
 };
