@@ -57,6 +57,8 @@ The test include some part module: actor, defualt map&level, dot/pointer and etc
 The test include some part module: light, BSP geometry, GetOwner() and etc.  
 - [x] (Test #12: Mid-section Quiz)  
 The test include some part module: FRotator, Tick, lerping and etc.  
+- [x] (Test #13: Mid-section Quiz)  
+The test include some part module: DeltaTime, Trigger, Assets Name standart, UPROPERTY and etc.  
 
 ## Other
 **Author:**  
