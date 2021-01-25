@@ -26,10 +26,12 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void OpenDoorRun(float DeltaTime);
+	void CloseDoorRun(float DeltaTime);
 
 private:
 	UPROPERTY(EditAnywhere)
 	float RollValue = 88.f;
+	float TargetStartYaw;
 	float TargetEndYaw;
 	FRotator OpenDoor;
 
@@ -38,4 +40,14 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	AActor *ActorPawn;
+
+	float DoorLastOpen = 0.f;
+
+	UPROPERTY(EditAnywhere)
+	float DoorCloseDelay = 2.f;
+
+	UPROPERTY(EditAnywhere)
+	float SpeedOpenCloseDoor = 0.8f;
+
+	
 };
