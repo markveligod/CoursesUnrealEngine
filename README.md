@@ -48,7 +48,7 @@ The test include some part module: Parameters and Arguments, Pre vs Post Increme
 - [x] (Test #8: Mid-section Quiz)  
 The test include some part module: const member functions, TArrays, ranged base loop, collections and etc.  
   
-### :black_square_button: 4. Building Escape.  
+### :heavy_check_mark: 4. Building Escape.  
 - [x] (Test #9: Mid-section Quiz)  
 The test include some part module: classes, pointer, workspace and etc.  
 - [x] (Test #10: Mid-section Quiz)  
@@ -61,6 +61,8 @@ The test include some part module: FRotator, Tick, lerping and etc.
 The test include some part module: DeltaTime, Trigger, Assets Name standart, UPROPERTY and etc.  
 - [x] (Test #14: Mid-section Quiz)  
 The test include some part module: FRotator, trigger volume, gamemode, defualt pawn, collision volume and etc.  
+
+### :black_square_button: 5. Toon Tanks.
 
 ## Other
 **Author:**  

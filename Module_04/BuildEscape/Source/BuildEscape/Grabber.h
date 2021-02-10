@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "Components/InputComponent.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Grabber.generated.h"
@@ -15,18 +17,34 @@ class BUILDESCAPE_API UGrabber : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UGrabber();
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	void RunDebugLine(FVector StartVec, FRotator PointRotator);
 
 private:
 	float Reach = 100.f;
-		
+	bool bDebugLine = false;
+
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
+	FVector LineTraceEnd;
+
+	UInputComponent * InputComponent = nullptr;
+	UPhysicsHandleComponent * PhysicsHandle = nullptr;
+	AActor * HitActor = nullptr;
+	
+	void RunDebugLine();
+	void SetupInputComponent();
+	void SetupDebugBool();
+	FHitResult FindHitObject();
+	void FindPhisicsHandle();
+	void GiveObject();
+	void PushObject();
 };

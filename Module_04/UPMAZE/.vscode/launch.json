@@ -1,0 +1,128 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "UPMAZE (Debug)",
+			"request": "launch",
+			"preLaunchTask": "UPMAZE Win64 Debug Build",
+			"program": "D:\\UEGithubProject\\UPMAZE\\Binaries\\Win64\\UE4-Win64-Debug.exe",
+			"args": [
+			],
+			"cwd": "D:\\Games\\UE_4.25",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\Games\\UE_4.25\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "UPMAZE (DebugGame)",
+			"request": "launch",
+			"preLaunchTask": "UPMAZE Win64 DebugGame Build",
+			"program": "D:\\UEGithubProject\\UPMAZE\\Binaries\\Win64\\UE4-Win64-DebugGame.exe",
+			"args": [
+			],
+			"cwd": "D:\\Games\\UE_4.25",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\Games\\UE_4.25\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "UPMAZE (Development)",
+			"request": "launch",
+			"preLaunchTask": "UPMAZE Win64 Development Build",
+			"program": "D:\\UEGithubProject\\UPMAZE\\Binaries\\Win64\\UE4.exe",
+			"args": [
+			],
+			"cwd": "D:\\Games\\UE_4.25",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\Games\\UE_4.25\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "UPMAZE (Shipping)",
+			"request": "launch",
+			"preLaunchTask": "UPMAZE Win64 Shipping Build",
+			"program": "D:\\UEGithubProject\\UPMAZE\\Binaries\\Win64\\UE4-Win64-Shipping.exe",
+			"args": [
+			],
+			"cwd": "D:\\Games\\UE_4.25",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\Games\\UE_4.25\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "UPMAZE (Test)",
+			"request": "launch",
+			"preLaunchTask": "UPMAZE Win64 Test Build",
+			"program": "D:\\UEGithubProject\\UPMAZE\\Binaries\\Win64\\UE4-Win64-Test.exe",
+			"args": [
+			],
+			"cwd": "D:\\Games\\UE_4.25",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\Games\\UE_4.25\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "UPMAZEEditor (Debug)",
+			"request": "launch",
+			"preLaunchTask": "UPMAZEEditor Win64 Debug Build",
+			"program": "D:\\Games\\UE_4.25\\Engine\\Binaries\\Win64\\UE4Editor-Win64-Debug.exe",
+			"args": [
+				"D:\\UEGithubProject\\UPMAZE\\UPMAZE.uproject"
+			],
+			"cwd": "D:\\Games\\UE_4.25",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\Games\\UE_4.25\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "UPMAZEEditor (DebugGame)",
+			"request": "launch",
+			"preLaunchTask": "UPMAZEEditor Win64 DebugGame Build",
+			"program": "D:\\Games\\UE_4.25\\Engine\\Binaries\\Win64\\UE4Editor-Win64-DebugGame.exe",
+			"args": [
+				"D:\\UEGithubProject\\UPMAZE\\UPMAZE.uproject"
+			],
+			"cwd": "D:\\Games\\UE_4.25",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\Games\\UE_4.25\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "UPMAZEEditor (Development)",
+			"request": "launch",
+			"preLaunchTask": "UPMAZEEditor Win64 Development Build",
+			"program": "D:\\Games\\UE_4.25\\Engine\\Binaries\\Win64\\UE4Editor.exe",
+			"args": [
+				"D:\\UEGithubProject\\UPMAZE\\UPMAZE.uproject"
+			],
+			"cwd": "D:\\Games\\UE_4.25",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\Games\\UE_4.25\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "Generate Project Files",
+			"type": "clr",
+			"request": "launch",
+			"program": "D:\\Games\\UE_4.25\\Engine\\Binaries\\DotNET\\UnrealBuildTool.exe",
+			"console": "externalTerminal",
+			"args": [
+				"-projectfiles",
+				"-vscode",
+				"-project=\"D:\\UEGithubProject\\UPMAZE\\UPMAZE.uproject\"",
+				"-game",
+				"-engine"
+			],
+			"internalConsoleOptions": "openOnSessionStart",
+			"cwd": "D:\\Games\\UE_4.25"
+		}
+	]
+}

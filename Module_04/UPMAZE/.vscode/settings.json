@@ -1,0 +1,7 @@
+{
+	"files.exclude": {
+		"D:/UEGithubProject/UPMAZE/.vscode": true,
+		"D:/UEGithubProject/UPMAZE/Content": true,
+		"D:/UEGithubProject/UPMAZE/Intermediate": true
+	}
+}

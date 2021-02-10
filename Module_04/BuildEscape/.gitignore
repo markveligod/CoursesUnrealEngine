@@ -78,8 +78,6 @@ DerivedDataCache/*
 
 # Starter Content Ignored
 
-Content/*
-
 VSCode Files
 /.vscode/*
 BuildingEscape.code-workspace

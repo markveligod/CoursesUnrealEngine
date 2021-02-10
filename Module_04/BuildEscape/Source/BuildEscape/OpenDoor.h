@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Engine/TriggerVolume.h"
 #include "Components/ActorComponent.h"
+#include "Components/AudioComponent.h"
 #include "OpenDoor.generated.h"
 
 
@@ -25,21 +26,20 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void OpenDoorRun(float DeltaTime);
-	void CloseDoorRun(float DeltaTime);
-
 private:
 	UPROPERTY(EditAnywhere)
 	float RollValue = 88.f;
 	float TargetStartYaw;
 	float TargetEndYaw;
 	FRotator OpenDoor;
+	bool OpenDoorSound = true;
+	bool CloseDoorSound = true;
 
 	UPROPERTY(EditAnywhere)
-	ATriggerVolume* PressurePlate;
+	ATriggerVolume* PressurePlate = nullptr;
 
 	UPROPERTY(EditAnywhere)
-	AActor *ActorPawn;
+	AActor *ActorPawn = nullptr;
 
 	float DoorLastOpen = 0.f;
 
@@ -48,6 +48,22 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float SpeedOpenCloseDoor = 0.8f;
+	
+	UPROPERTY(EditAnywhere)
+	float MassDoor = 50.f;
 
+	UPROPERTY(EditAnywhere)
+	AActor * Key = nullptr;
+
+	UPROPERTY()
+	UAudioComponent * AudioComp = nullptr;
+	
+	void OpenDoorRun(float DeltaTime);
+	void CloseDoorRun(float DeltaTime);
+	float TotalMassOfActor() const;
+
+	bool CheckStartFunc() const;
+
+	void FindAudioComponent();
 	
 };
