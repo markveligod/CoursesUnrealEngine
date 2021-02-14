@@ -1,0 +1,9 @@
+{
+	"files.exclude": {
+		"D:/CoursesUnrealEngine/Module_05/.vscode": true,
+		"D:/CoursesUnrealEngine/Module_05/Content": true,
+		"D:/CoursesUnrealEngine/Module_05/DerivedDataCache": true,
+		"D:/CoursesUnrealEngine/Module_05/Intermediate": true,
+		"D:/CoursesUnrealEngine/Module_05/Saved": true
+	}
+}
