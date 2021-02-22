@@ -31,6 +31,8 @@ private:
 
 	APlayerController * PlayerControllerRef;
 
+	bool bPlayerAlive = true;
+
 	void CalculateMoveInput(float value);
 	void CalculateRotateInput(float value);
 
@@ -48,6 +50,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	virtual void HandleDestruction() override;
+
+	bool GetIsPlayerAlive();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

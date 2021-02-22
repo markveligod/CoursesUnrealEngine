@@ -29,7 +29,14 @@ void APawnTank::HandleDestruction()
 {
     Super::HandleDestruction();
     // Hide player
-    Destroy();
+    this->bPlayerAlive = false;
+    SetActorHiddenInGame(true);
+    SetActorTickEnabled(false);
+}
+
+bool APawnTank::GetIsPlayerAlive() 
+{
+    return (this->bPlayerAlive);
 }
 
 // Called every frame
