@@ -3,6 +3,7 @@
 This repository stores is courses to Unreal Engine 4 on C++ language and bluprint scripts. Courses posted on the site Udemy:  
 1. Unreal Engine C++ Developer: Learn C++ and Make Video Games [Link](https://www.udemy.com/course/unrealcourse/)  
 2. Unreal Engine Blueprint Game Developer [Link](https://www.udemy.com/course/unrealblueprint/)  
+3. Unreal Engine — полное руководство по разработке на С++ [Link](https://www.udemy.com/course/unrealengine/)  
   
 As I progress, I will fill out a README and report on the progress of tasks, including the code provided.  
 A certificate will be attached at the end of the course.  
@@ -64,7 +65,15 @@ The test include some part module: FRotator, trigger volume, gamemode, defualt p
 
 ### :heavy_check_mark: 5. Toon Tanks.
 
-### :black_square_button: 6. Simple Shooter. 
+### :black_square_button: 6. Simple Shooter.  
+
+## Unreal Engine — полное руководство по разработке на С++
+### Description  
+The main project of the course is the third-person shooter ShootThemUp, which we will consistently develop, plunging into various subsystems and engine details.   
+Together we will cover all the key concepts and write a lot of C ++ code.  
+Each section of the course will contain homework assignments and tests to reinforce the material covered.  
+At the end of each chapter, we will refactor to improve the quality and purity of our code and package the game.  
+
 
 ## Other
 **Author:**  
