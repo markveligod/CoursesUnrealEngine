@@ -73,7 +73,22 @@ The main project of the course is the third-person shooter ShootThemUp, which we
 Together we will cover all the key concepts and write a lot of C ++ code.  
 Each section of the course will contain homework assignments and tests to reinforce the material covered.  
 At the end of each chapter, we will refactor to improve the quality and purity of our code and package the game.  
-
+In the course we will cover the following topics:  
+* Unreal Framework: core classes, types, macros, delegates, property system
+* Compiling the project: modules, targets
+* Garbage collector
+* Unreal Engine Component Model
+* Animation programming: state machine, FABRIK, anim notifies
+* UMG: user interfaces
+* Niagara visual effects
+* Collision handling
+* Physical materials
+* Postprocessing
+* Artificial intelligence: behavior trees, tasks, services, decorators, EQS
+* AI component of enemy perception
+* Sound Control: SoundCue, SoundClass, SoundMix, Attenuation settings
+* Controlling the game process: GameMode, PlayerState, GameInstance
+* Dynamic level loading
 
 ## Other
 **Author:**  
