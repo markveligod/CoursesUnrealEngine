@@ -11,6 +11,7 @@ class UStaticMeshComponent;
 class UDamageType;
 class UParticleSystem;
 class UParticleSystemComponent;
+class USoundBase;
 
 UCLASS()
 class TOONTANKS_API AProjectileBase : public AActor
@@ -32,11 +33,22 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Effects")
 	UParticleSystem *HitParticle;
 
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	USoundBase * HitSound;
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	USoundBase * LaunchSound;
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	TSubclassOf<UCameraShake> HitShake;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UParticleSystemComponent * ParticleTrail;
 	
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit);
+
+	
+
+	
 
 public:	
 	// Sets default values for this actor's properties
