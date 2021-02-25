@@ -62,7 +62,9 @@ The test include some part module: DeltaTime, Trigger, Assets Name standart, UPR
 - [x] (Test #14: Mid-section Quiz)  
 The test include some part module: FRotator, trigger volume, gamemode, defualt pawn, collision volume and etc.  
 
-### :black_square_button: 5. Toon Tanks.
+### :heavy_check_mark: 5. Toon Tanks.
+
+### :black_square_button: 6. Simple Shooter. 
 
 ## Other
 **Author:**  
