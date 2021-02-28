@@ -3,3 +3,10 @@
 ################################################################################
 
 /Unreal Engine Full C++/SandBox/.idea/.idea.SandBox/.idea
+/Unreal Engine Full C++/SandBox/.vs
+/Unreal Engine Full C++/SandBox/*.sln
+/Unreal Engine Full C++/SandBox/DerivedDataCache/
+/Unreal Engine Full C++/SandBox/Intermediate/
+/Unreal Engine Full C++/SandBox/Saved/
+/Unreal Engine Full C++/SandBox/Binaries/
+/Unreal Engine Full C++/SandBox/Build/
