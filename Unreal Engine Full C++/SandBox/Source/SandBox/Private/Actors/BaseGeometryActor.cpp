@@ -19,6 +19,11 @@ ABaseGeometryActor::ABaseGeometryActor()
 	SetRootComponent(BaseMeshActor);
 }
 
+FGeometryDate ABaseGeometryActor::GetGeometryDate()
+{
+	return (this->GeometryMoveDate);
+}
+
 // Called when the game starts or when spawned
 void ABaseGeometryActor::BeginPlay()
 {
@@ -42,6 +47,11 @@ void ABaseGeometryActor::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	this->HandleMovement();
+}
+
+void ABaseGeometryActor::SetGeometryDate(const FGeometryDate& Date)
+{
+	this->GeometryMoveDate = Date;
 }
 
 void ABaseGeometryActor::printTypes()
@@ -119,10 +129,13 @@ void ABaseGeometryActor::OnTimerFired()
 		const FLinearColor NewColor = FLinearColor::MakeRandomColor();
 		UE_LOG(LogGeometryBase, Warning, TEXT("New color #%d: %s"), this->CurrCountTimer, *NewColor.ToString());
 		this->SetColor(NewColor);
+		this->OnColorChanched.Broadcast(NewColor, GetName());
 	}
 	else
 	{
 		GetWorldTimerManager().ClearTimer(this->TimerHandle);
+		this->OnTimerFinished.Broadcast(this);
 	}
 }
+
 

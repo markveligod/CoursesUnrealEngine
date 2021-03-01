@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "BaseGeometryActor.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnColorChanched, const FLinearColor&, Color, const FString, Name);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnTimerFinished, AActor*);
+
 class UStaticMeshComponent;
 
 UENUM(BlueprintType)
@@ -20,20 +23,20 @@ struct FGeometryDate
 {
 	GENERATED_USTRUCT_BODY()
 
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		float Amplitude = 50.f;
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		float Frequence = 2.f;
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		EMovementType MoveType = EMovementType::Static;
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		bool bXSin = false;
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		bool bYSin = false;
-	UPROPERTY(EditAnywhere, Category = "Movement")
-		bool bZSin = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+		bool bZSin = true;
 
-	UPROPERTY(EditAnywhere, Category = "Design")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Design")
 		FLinearColor BaseColor = FLinearColor::Black;
 
 	UPROPERTY(EditAnywhere, Category = "Design")
@@ -51,6 +54,14 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 		UStaticMeshComponent* BaseMeshActor;
+
+	UFUNCTION(BlueprintCallable)
+		FGeometryDate GetGeometryDate();
+
+	UPROPERTY(BlueprintAssignable)
+		FOnColorChanched OnColorChanched;
+	
+	FOnTimerFinished OnTimerFinished;
 
 protected:
 	// Called when the game starts or when spawned
@@ -78,6 +89,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void SetGeometryDate(const FGeometryDate & Date);
+
 private:
 	//VARIBLE's
 	FVector InitialLocation;
@@ -98,4 +111,7 @@ private:
 	void SetColor(const FLinearColor & Color);
 
 	void OnTimerFired();
+
+
+	
 };
