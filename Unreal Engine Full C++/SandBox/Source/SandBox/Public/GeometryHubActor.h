@@ -44,8 +44,19 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void SpawnNewActors();
+	void SpawnNewActorsNone();
 
 	UFUNCTION()
 	void OnColorChanched(const FLinearColor& Color, const FString Name);
 	void OnTimerFinished(AActor* Actor);
+
+private:
+	ABaseGeometryActor* NonePropetryActor;
+	UPROPERTY()
+		ABaseGeometryActor* PropertyActor;
+
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<ABaseGeometryActor> GeometryClass;
+	
+	
 };
