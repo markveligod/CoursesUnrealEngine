@@ -12,7 +12,7 @@ public class ShootTheMap : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
-		PublicIncludePaths.AddRange(new string[] { "ShootTheMap/Public/Characters", "ShootTheMap/Public/Characters/Components" });
+		PublicIncludePaths.AddRange(new string[] { "ShootTheMap/Public/Characters", "ShootTheMap/Public/Characters/Components", "ShootTheMap/Public/Characters/Dev" });
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

@@ -9,6 +9,8 @@
 class UCameraComponent;
 class USpringArmComponent;
 class UCharacterMovementComponent;
+class UHealthComponent;
+class UTextRenderComponent;
 
 UCLASS()
 class SHOOTTHEMAP_API ASTMBaseCharacter : public ACharacter
@@ -25,6 +27,15 @@ class SHOOTTHEMAP_API ASTMBaseCharacter : public ACharacter
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USpringArmComponent *SpringArm;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    UHealthComponent *Health;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    UTextRenderComponent *HealthTextComp;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Animation")
+    UAnimMontage *DeathAnimMontage;
 
     // Called when the game starts or when spawned
     virtual void BeginPlay() override;
@@ -58,4 +69,7 @@ class SHOOTTHEMAP_API ASTMBaseCharacter : public ACharacter
 
     void StartRun();
     void StopRun();
+
+    void OnDeath();
+    void OnHealthChanged(float NewHealth);
 };
