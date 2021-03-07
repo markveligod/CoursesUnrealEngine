@@ -2,13 +2,13 @@
 
 #include "Characters/STMBaseCharacter.h"
 #include "Camera/CameraComponent.h"
+#include "Characters/Components/HealthComponent.h"
 #include "Characters/Components/STMCharacterMovementComponent.h"
 #include "Components/InputComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/SpringArmComponent.h"
-#include "Characters/Components/HealthComponent.h"
 #include "Components/TextRenderComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
+#include "GameFramework/SpringArmComponent.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogCharacter, All, All)
 
@@ -30,7 +30,7 @@ ASTMBaseCharacter::ASTMBaseCharacter(const FObjectInitializer &ObjInit)
     this->CameraComponent = CreateDefaultSubobject<UCameraComponent>("Camera Component");
     this->CameraComponent->SetupAttachment(this->SpringArm);
 
-    //Create Health component
+    // Create Health component
     this->Health = CreateDefaultSubobject<UHealthComponent>("Health Component");
 
     this->HealthTextComp = CreateDefaultSubobject<UTextRenderComponent>("Text Health Component");
@@ -48,13 +48,13 @@ void ASTMBaseCharacter::BeginPlay()
     this->Health->OnDeath.AddUObject(this, &ASTMBaseCharacter::OnDeath);
     this->Health->OnDeathChange.AddUObject(this, &ASTMBaseCharacter::OnHealthChanged);
 
+    LandedDelegate.AddDynamic(this, &ASTMBaseCharacter::OnGroundLanded);
 }
 
 // Called every frame
 void ASTMBaseCharacter::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
@@ -131,6 +131,16 @@ void ASTMBaseCharacter::OnHealthChanged(float NewHealth)
     this->HealthTextComp->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), NewHealth)));
 }
 
+void ASTMBaseCharacter::OnGroundLanded(const FHitResult &Hit)
+{
+    const auto FallVelocity = -GetCharacterMovement()->Velocity.Z;
+    if (FallVelocity < LandedDamageVelocity.X)
+        return;
+
+    const auto FinalDamage = FMath::GetMappedRangeValueClamped(LandedDamageVelocity, LandeDamage, FallVelocity);
+    UE_LOG(LogCharacter, Warning, TEXT("Final Damage: %f"), FinalDamage);
+    TakeDamage(FinalDamage, FDamageEvent{}, nullptr, nullptr);
+}
 
 // void ASTMBaseCharacter::LookUp(float amount)
 //{
