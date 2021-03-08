@@ -11,6 +11,7 @@ class USpringArmComponent;
 class UCharacterMovementComponent;
 class UHealthComponent;
 class UTextRenderComponent;
+class USTMWeaponComponent;
 
 UCLASS()
 class SHOOTTHEMAP_API ASTMBaseCharacter : public ACharacter
@@ -33,6 +34,9 @@ class SHOOTTHEMAP_API ASTMBaseCharacter : public ACharacter
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     UTextRenderComponent *HealthTextComp;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    USTMWeaponComponent *WeaponComp;
 
     UPROPERTY(EditDefaultsOnly, Category = "Animation")
     UAnimMontage *DeathAnimMontage;
@@ -81,5 +85,5 @@ class SHOOTTHEMAP_API ASTMBaseCharacter : public ACharacter
     UFUNCTION()
     void OnGroundLanded(const FHitResult &Hit);
 
-    void SpawnWeapon();
+    
 };

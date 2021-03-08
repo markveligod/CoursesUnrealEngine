@@ -16,11 +16,20 @@ class SHOOTTHEMAP_API ASTMBaseWeapon : public AActor
   public:
     ASTMBaseWeapon();
 
+    virtual void Fire();
+
   protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USkeletalMeshComponent *WeaponMesh;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    FName MuzzleSocketName = "MuzzleSocket";
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    float TraceMaxDistance = 1500.f;
+
     virtual void BeginPlay() override;
 
   private:
+    void MakeShot();
 };

@@ -9,6 +9,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Weapons/STMWeaponComponent.h"
+
 
 DEFINE_LOG_CATEGORY_STATIC(LogCharacter, All, All)
 
@@ -25,6 +27,7 @@ ASTMBaseCharacter::ASTMBaseCharacter(const FObjectInitializer &ObjInit)
     this->SpringArm = CreateDefaultSubobject<USpringArmComponent>("Spring Arm");
     this->SpringArm->SetupAttachment(GetRootComponent());
     this->SpringArm->bUsePawnControlRotation = true;
+    this->SpringArm->SocketOffset = FVector(0.f, 100.f, 80.f);
 
     // Create Camera Component
     this->CameraComponent = CreateDefaultSubobject<UCameraComponent>("Camera Component");
@@ -35,6 +38,10 @@ ASTMBaseCharacter::ASTMBaseCharacter(const FObjectInitializer &ObjInit)
 
     this->HealthTextComp = CreateDefaultSubobject<UTextRenderComponent>("Text Health Component");
     this->HealthTextComp->SetupAttachment(GetRootComponent());
+    this->HealthTextComp->bOwnerNoSee = true;
+
+    //Create Weapon component
+    this->WeaponComp = CreateDefaultSubobject<USTMWeaponComponent>("Weapon Component");
 }
 
 // Called when the game starts or when spawned
@@ -44,11 +51,16 @@ void ASTMBaseCharacter::BeginPlay()
     check(this->Health);
     check(this->HealthTextComp);
     check(GetCharacterMovement());
+    check(this->WeaponComp);
+
     this->OnHealthChanged(this->Health->GetHealth());
     this->Health->OnDeath.AddUObject(this, &ASTMBaseCharacter::OnDeath);
     this->Health->OnDeathChange.AddUObject(this, &ASTMBaseCharacter::OnHealthChanged);
 
+    //Join to delegate LandedDelegate
     LandedDelegate.AddDynamic(this, &ASTMBaseCharacter::OnGroundLanded);
+
+    
 }
 
 // Called every frame
@@ -70,6 +82,7 @@ void ASTMBaseCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
         PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ASTMBaseCharacter::Jump);
         PlayerInputComponent->BindAction("Run", IE_Pressed, this, &ASTMBaseCharacter::StartRun);
         PlayerInputComponent->BindAction("Run", IE_Released, this, &ASTMBaseCharacter::StopRun);
+        PlayerInputComponent->BindAction("Fire", IE_Pressed, this->WeaponComp, &USTMWeaponComponent::OnFire);
     }
 }
 
@@ -141,6 +154,8 @@ void ASTMBaseCharacter::OnGroundLanded(const FHitResult &Hit)
     UE_LOG(LogCharacter, Warning, TEXT("Final Damage: %f"), FinalDamage);
     TakeDamage(FinalDamage, FDamageEvent{}, nullptr, nullptr);
 }
+
+
 
 // void ASTMBaseCharacter::LookUp(float amount)
 //{
