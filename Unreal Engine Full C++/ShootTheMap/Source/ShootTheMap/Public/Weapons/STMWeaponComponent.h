@@ -31,4 +31,6 @@ class SHOOTTHEMAP_API USTMWeaponComponent : public UActorComponent
     ASTMBaseWeapon *CurrentWeapon = nullptr;
 
     void SpawnWeapon();
+    UFUNCTION()
+    void DestroyWeapon();
 };

@@ -28,8 +28,17 @@ class SHOOTTHEMAP_API ASTMBaseWeapon : public AActor
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     float TraceMaxDistance = 1500.f;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    float DamageAmount = 10.f;
+
     virtual void BeginPlay() override;
 
   private:
     void MakeShot();
+    APlayerController *GetPlayerController() const;
+    bool GetPlayerViewPoint(FVector &ViewLocation, FRotator &ViewRotation) const;
+    FVector GetMuzzleWorldLocation() const;
+    bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
+    void MakeHit(FHitResult &HitResult, FVector &TraceStart, FVector &TraceEnd);
+    void MakeDamage(FHitResult& HitResult);
 };

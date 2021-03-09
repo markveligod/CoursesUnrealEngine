@@ -13,6 +13,8 @@ class UHealthComponent;
 class UTextRenderComponent;
 class USTMWeaponComponent;
 
+DECLARE_MULTICAST_DELEGATE(FOnDestroyWeapon);
+
 UCLASS()
 class SHOOTTHEMAP_API ASTMBaseCharacter : public ACharacter
 {
@@ -63,6 +65,8 @@ class SHOOTTHEMAP_API ASTMBaseCharacter : public ACharacter
 
     UFUNCTION(BlueprintCallable, Category = "Movement")
     float GetMovementDirection() const;
+
+    FOnDestroyWeapon OnDestroyWeapon;
 
   private:
     UCharacterMovementComponent *MovementComponent;

@@ -3,6 +3,7 @@
 #include "Weapons/STMWeaponComponent.h"
 #include "Weapons/STMBaseWeapon.h"
 #include "GameFramework/Character.h"
+#include "Characters/STMBaseCharacter.h"
 
 // Sets default values for this component's properties
 USTMWeaponComponent::USTMWeaponComponent()
@@ -23,6 +24,9 @@ void USTMWeaponComponent::BeginPlay()
 {
     Super::BeginPlay();
     this->SpawnWeapon();
+    ASTMBaseCharacter *CurrentCharacterTemp = Cast<ASTMBaseCharacter>(GetOwner());
+    if (CurrentCharacterTemp)
+        CurrentCharacterTemp->OnDestroyWeapon.AddUObject(this, &USTMWeaponComponent::DestroyWeapon);
 }
 
 void USTMWeaponComponent::SpawnWeapon()
@@ -39,4 +43,9 @@ void USTMWeaponComponent::SpawnWeapon()
     this->CurrentWeapon->AttachToComponent(Character->GetMesh(), AttachmentRules, this->WeaponAttachPointName);
     this->CurrentWeapon->SetOwner(Character);
 
+}
+
+void USTMWeaponComponent::DestroyWeapon()
+{
+    GetWorld()->DestroyActor(this->CurrentWeapon);
 }

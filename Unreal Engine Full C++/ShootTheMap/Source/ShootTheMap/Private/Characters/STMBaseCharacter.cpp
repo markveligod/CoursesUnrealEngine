@@ -6,6 +6,7 @@
 #include "Characters/Components/STMCharacterMovementComponent.h"
 #include "Components/InputComponent.h"
 #include "Components/TextRenderComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -132,7 +133,9 @@ void ASTMBaseCharacter::OnDeath()
     UE_LOG(LogCharacter, Warning, TEXT("Player %s is Dead!"), *GetName());
     PlayAnimMontage(this->DeathAnimMontage);
     GetCharacterMovement()->DisableMovement();
+    GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
     SetLifeSpan(5.f);
+    this->OnDestroyWeapon.Broadcast();
     if (Controller)
     {
         Controller->ChangeState(NAME_Spectating);
