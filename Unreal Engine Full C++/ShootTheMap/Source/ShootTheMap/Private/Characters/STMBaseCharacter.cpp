@@ -83,7 +83,10 @@ void ASTMBaseCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
         PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ASTMBaseCharacter::Jump);
         PlayerInputComponent->BindAction("Run", IE_Pressed, this, &ASTMBaseCharacter::StartRun);
         PlayerInputComponent->BindAction("Run", IE_Released, this, &ASTMBaseCharacter::StopRun);
-        PlayerInputComponent->BindAction("Fire", IE_Pressed, this->WeaponComp, &USTMWeaponComponent::OnFire);
+        PlayerInputComponent->BindAction("Fire", IE_Pressed, this->WeaponComp, &USTMWeaponComponent::StartFire);
+        PlayerInputComponent->BindAction("Fire", IE_Released, this->WeaponComp, &USTMWeaponComponent::StopFire);
+        PlayerInputComponent->BindAction("NextWeapon", IE_Released, this->WeaponComp, &USTMWeaponComponent::NextWeapon);
+
     }
 }
 
@@ -135,11 +138,11 @@ void ASTMBaseCharacter::OnDeath()
     GetCharacterMovement()->DisableMovement();
     GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
     SetLifeSpan(5.f);
-    this->OnDestroyWeapon.Broadcast();
     if (Controller)
     {
         Controller->ChangeState(NAME_Spectating);
     }
+    this->WeaponComp->StopFire();
 }
 
 void ASTMBaseCharacter::OnHealthChanged(float NewHealth)

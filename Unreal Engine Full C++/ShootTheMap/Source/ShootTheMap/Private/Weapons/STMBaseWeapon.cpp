@@ -17,10 +17,14 @@ ASTMBaseWeapon::ASTMBaseWeapon()
     SetRootComponent(this->WeaponMesh);
 }
 
-void ASTMBaseWeapon::Fire()
+void ASTMBaseWeapon::StartFire()
 {
-    UE_LOG(LogBaseWeapon, Warning, TEXT("FIRE!!!"));
-    this->MakeShot();
+    
+}
+
+void ASTMBaseWeapon::StopFire()
+{
+
 }
 
 void ASTMBaseWeapon::BeginPlay()
@@ -31,20 +35,7 @@ void ASTMBaseWeapon::BeginPlay()
 
 void ASTMBaseWeapon::MakeShot()
 {
-    if (!GetWorld())
-        return;
 
-    FVector TraceStart;
-    FVector TraceEnd;
-
-    if (!this->GetTraceData(TraceStart, TraceEnd)) return;
-
-    FHitResult HitResult;
-    FCollisionQueryParams CollisionQueryParams;
-    CollisionQueryParams.AddIgnoredActor(GetOwner());
-    GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility,
-                                             CollisionQueryParams);
-    this->MakeHit(HitResult, TraceStart, TraceEnd);
 }
 
 APlayerController *ASTMBaseWeapon::GetPlayerController() const
@@ -81,27 +72,8 @@ bool ASTMBaseWeapon::GetTraceData(FVector &TraceStart, FVector &TraceEnd) const
     return (true);
 }
 
-void ASTMBaseWeapon::MakeHit(FHitResult &HitResult, FVector &TraceStart, FVector &TraceEnd)
-{
-    if (HitResult.bBlockingHit)
-    {
-        DrawDebugLine(GetWorld(), this->GetMuzzleWorldLocation(), HitResult.ImpactPoint, FColor::Red, false, 3.f, 0, 3.f);
-        DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.f, 24, FColor::Red, false, 5.f);
 
-        this->MakeDamage(HitResult);
-    }
-    else
-    {
-        DrawDebugLine(GetWorld(), this->GetMuzzleWorldLocation(), TraceEnd, FColor::Red, false, 3.f, 0, 3.f);
-    }
-}
 
-void ASTMBaseWeapon::MakeDamage(FHitResult &HitResult)
-{
-    const auto DamageActor = HitResult.GetActor();
-    if (!DamageActor)
-        return;
-    DamageActor->TakeDamage(this->DamageAmount, FDamageEvent{}, GetPlayerController(), this);
-}
+
 
 

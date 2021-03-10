@@ -1,51 +1,99 @@
 // ShootTheMap
 
 #include "Weapons/STMWeaponComponent.h"
-#include "Weapons/STMBaseWeapon.h"
-#include "GameFramework/Character.h"
 #include "Characters/STMBaseCharacter.h"
+#include "GameFramework/Character.h"
+#include "Weapons/STMBaseWeapon.h"
 
 // Sets default values for this component's properties
 USTMWeaponComponent::USTMWeaponComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
-
-}
-
-void USTMWeaponComponent::OnFire()
-{
-    if (!this->CurrentWeapon) return;
-
-    this->CurrentWeapon->Fire();
 }
 
 // Called when the game starts
 void USTMWeaponComponent::BeginPlay()
 {
     Super::BeginPlay();
-    this->SpawnWeapon();
-    ASTMBaseCharacter *CurrentCharacterTemp = Cast<ASTMBaseCharacter>(GetOwner());
-    if (CurrentCharacterTemp)
-        CurrentCharacterTemp->OnDestroyWeapon.AddUObject(this, &USTMWeaponComponent::DestroyWeapon);
+    this->SpawnWeapons();
+    this->EquipWeapon(this->CurrentIndexWeapon);
 }
 
-void USTMWeaponComponent::SpawnWeapon()
+void USTMWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-    if (!GetWorld()) return;
+    this->CurrentWeapon = nullptr;
+    for (auto WeaponPtr : this->WeaponsPtr)
+    {
+        WeaponPtr->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+        WeaponPtr->Destroy();
+    }
+    this->WeaponsPtr.Empty();
+    Super::EndPlay(EndPlayReason);
+}
 
+
+void USTMWeaponComponent::SpawnWeapons()
+{
     ACharacter *Character = Cast<ACharacter>(GetOwner());
-    if (!Character) return;
+    if (!Character || !GetWorld())
+        return;
 
-    this->CurrentWeapon = GetWorld()->SpawnActor<ASTMBaseWeapon>(this->WeaponClass);
-    if (!this->CurrentWeapon) return;
+    for (auto WeaponClass : this->WeaponClasses)
+    {
+        auto TempWeapon = GetWorld()->SpawnActor<ASTMBaseWeapon>(WeaponClass);
+        if (!TempWeapon)
+            continue;
+        TempWeapon->SetOwner(GetOwner());
+        this->WeaponsPtr.Add(TempWeapon);
 
-    FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
-    this->CurrentWeapon->AttachToComponent(Character->GetMesh(), AttachmentRules, this->WeaponAttachPointName);
-    this->CurrentWeapon->SetOwner(Character);
+        AttachWeaponToSocket(TempWeapon, Character->GetMesh(), this->WeaponArmorySocketName);
+    }
 
+    
 }
 
-void USTMWeaponComponent::DestroyWeapon()
+void USTMWeaponComponent::EquipWeapon(int32 WeaponIndex)
 {
-    GetWorld()->DestroyActor(this->CurrentWeapon);
+    ACharacter *Character = Cast<ACharacter>(GetOwner());
+    if (!Character || !GetWorld())
+        return;
+
+    if (this->CurrentWeapon)
+    {
+        this->CurrentWeapon->StopFire();
+        AttachWeaponToSocket(this->CurrentWeapon, Character->GetMesh(), this->WeaponArmorySocketName);
+    }
+
+    this->CurrentWeapon = this->WeaponsPtr[WeaponIndex];
+    AttachWeaponToSocket(this->CurrentWeapon, Character->GetMesh(), this->WeaponEquipSocketName);
+}
+
+void USTMWeaponComponent::AttachWeaponToSocket(ASTMBaseWeapon *Weapon, USceneComponent *Mesh, const FName& Socket)
+{
+    if (!Weapon || !Mesh)
+        return;
+    FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
+    Weapon->AttachToComponent(Mesh, AttachmentRules, Socket);
+}
+
+void USTMWeaponComponent::StartFire()
+{
+    if (!this->CurrentWeapon)
+        return;
+
+    this->CurrentWeapon->StartFire();
+}
+
+void USTMWeaponComponent::StopFire()
+{
+    if (!this->CurrentWeapon)
+        return;
+
+    this->CurrentWeapon->StopFire();
+}
+
+void USTMWeaponComponent::NextWeapon()
+{
+    this->CurrentIndexWeapon = (CurrentIndexWeapon + 1) % this->WeaponsPtr.Num();
+    this->EquipWeapon(this->CurrentIndexWeapon);
 }
