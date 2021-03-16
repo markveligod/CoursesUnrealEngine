@@ -8,6 +8,18 @@
 
 class ASTMBaseWeapon;
 
+USTRUCT(BlueprintType)
+struct FWeaponData
+{
+    GENERATED_USTRUCT_BODY();
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons")
+    TSubclassOf<ASTMBaseWeapon> WeaponClass;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons")
+    UAnimMontage *AnimReload;
+};
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class SHOOTTHEMAP_API USTMWeaponComponent : public UActorComponent
 {
@@ -25,13 +37,16 @@ class SHOOTTHEMAP_API USTMWeaponComponent : public UActorComponent
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
     UPROPERTY(EditAnywhere, Category = "Weapons")
-    TArray<TSubclassOf<ASTMBaseWeapon>> WeaponClasses;
+    TArray<FWeaponData> WeaponDates;
 
     UPROPERTY(EditAnywhere, Category = "Weapons")
     FName WeaponEquipSocketName = "WeaponSocket";
 
     UPROPERTY(EditAnywhere, Category = "Weapons")
     FName WeaponArmorySocketName = "ArmorySocket";
+
+    UPROPERTY(EditAnywhere, Category = "Weapons")
+    UAnimMontage *AnimationEquip;
 
   private:
     UPROPERTY()
@@ -42,8 +57,14 @@ class SHOOTTHEMAP_API USTMWeaponComponent : public UActorComponent
 
     int32 CurrentIndexWeapon = 0;
 
+    bool AnimInProgress = false;
 
     void AttachWeaponToSocket(ASTMBaseWeapon *Weapon, USceneComponent *Mesh, const FName &Socket);
     void SpawnWeapons();
     void EquipWeapon(int32 WeaponIndex);
+    void AnimEquip(UAnimMontage *Animation);
+    void InitAnimations();
+    void OnEquipFinish(USkeletalMeshComponent *Mesh);
+    bool CanFire() const;
+    bool CanEquip() const;
 };

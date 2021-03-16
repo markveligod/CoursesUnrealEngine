@@ -31,6 +31,7 @@ void ASTMBaseWeapon::BeginPlay()
 {
     Super::BeginPlay();
     check(this->WeaponMesh);
+    this->CurrentAmmo = this->DefaultAmmoData; 
 }
 
 void ASTMBaseWeapon::MakeShot()
@@ -72,7 +73,42 @@ bool ASTMBaseWeapon::GetTraceData(FVector &TraceStart, FVector &TraceEnd) const
     return (true);
 }
 
+void ASTMBaseWeapon::DecreaseAmmo()
+{
+    this->CurrentAmmo.Bullet--;
+    this->LogAmmo();
 
+    if (this->IsClipEmpty() && !this->IsAmmoEmpty())
+    {
+        this->ChangeClip();
+    }
+}
+
+bool ASTMBaseWeapon::IsAmmoEmpty() const
+{
+    return (!this->CurrentAmmo.bInfinity && this->CurrentAmmo.Clips == 0 && this->IsClipEmpty());
+}
+
+bool ASTMBaseWeapon::IsClipEmpty() const
+{
+    return (this->CurrentAmmo.Bullet == 0);
+}
+
+void ASTMBaseWeapon::ChangeClip()
+{
+    this->CurrentAmmo.Bullet = this->DefaultAmmoData.Bullet;
+    if (!this->CurrentAmmo.bInfinity)
+        this->CurrentAmmo.Clips--;
+    UE_LOG(LogBaseWeapon, Warning, TEXT("---Change Clip---"));
+}
+
+void ASTMBaseWeapon::LogAmmo()
+{
+    FString AmmoInfo = "Ammo: " + FString::FromInt(this->CurrentAmmo.Bullet) + "/";
+    AmmoInfo += (this->CurrentAmmo.bInfinity ? "Infinity" : FString::FromInt(this->CurrentAmmo.Clips));
+    UE_LOG(LogBaseWeapon, Warning, TEXT("%s"), *AmmoInfo);
+
+}
 
 
 

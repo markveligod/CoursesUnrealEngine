@@ -12,7 +12,7 @@ void ASTMLauncherWeapon::StartFire()
 
 void ASTMLauncherWeapon::MakeShot()
 {
-    if (!GetWorld())
+    if (!GetWorld() || IsAmmoEmpty())
         return;
 
     FVector TraceStart;
@@ -38,7 +38,7 @@ void ASTMLauncherWeapon::MakeShot()
         Projectile->SetOwner(GetOwner());
         Projectile->FinishSpawning(SpawnTransform);
     }
-
+    DecreaseAmmo();
     /* auto Projectile = UGameplayStatics::BeginDeferredActorSpawnFromClass(GetWorld(), this->ProjectileClass, SpawnTransform);*/
     //set projectile params
     /*UGameplayStatics::FinishSpawningActor(Projectile, SpawnTransform);*/

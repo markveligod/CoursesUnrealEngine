@@ -17,8 +17,11 @@ void ASTMRifleWeapon::StopFire()
 
 void ASTMRifleWeapon::MakeShot()
 {
-    if (!GetWorld())
+    if (!GetWorld() || IsAmmoEmpty())
+    {
+        this->StopFire();
         return;
+    }
 
     FVector TraceStart;
     FVector TraceEnd;
@@ -32,6 +35,7 @@ void ASTMRifleWeapon::MakeShot()
     GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility,
                                          CollisionQueryParams);
     this->MakeHit(HitResult, TraceStart, TraceEnd);
+    DecreaseAmmo();
 }
 
 bool ASTMRifleWeapon::GetTraceData(FVector &TraceStart, FVector &TraceEnd) const
