@@ -31,6 +31,8 @@ void ASTMBaseWeapon::BeginPlay()
 {
     Super::BeginPlay();
     check(this->WeaponMesh);
+    checkf(this->DefaultAmmoData.Bullet > 0, TEXT("Bullet < 0"));
+    checkf(this->DefaultAmmoData.Clips > 0, TEXT("Clips < 0"));
     this->CurrentAmmo = this->DefaultAmmoData; 
 }
 
@@ -75,12 +77,19 @@ bool ASTMBaseWeapon::GetTraceData(FVector &TraceStart, FVector &TraceEnd) const
 
 void ASTMBaseWeapon::DecreaseAmmo()
 {
+    if (CurrentAmmo.Bullet == 0)
+    {
+        UE_LOG(LogBaseWeapon, Warning, TEXT("Bullet == 0"));
+        return;
+    }
+
     this->CurrentAmmo.Bullet--;
     this->LogAmmo();
 
     if (this->IsClipEmpty() && !this->IsAmmoEmpty())
     {
-        this->ChangeClip();
+        //StopFire();
+        this->OnClimpEmptySignature.Broadcast();
     }
 }
 
@@ -96,10 +105,27 @@ bool ASTMBaseWeapon::IsClipEmpty() const
 
 void ASTMBaseWeapon::ChangeClip()
 {
-    this->CurrentAmmo.Bullet = this->DefaultAmmoData.Bullet;
     if (!this->CurrentAmmo.bInfinity)
+    {
+        if (CurrentAmmo.Clips == 0)
+        {
+            UE_LOG(LogBaseWeapon, Warning, TEXT("Clips == 0"));
+            return;
+        }
         this->CurrentAmmo.Clips--;
+    }
+    this->CurrentAmmo.Bullet = this->DefaultAmmoData.Bullet;
     UE_LOG(LogBaseWeapon, Warning, TEXT("---Change Clip---"));
+}
+
+bool ASTMBaseWeapon::CanReload() const
+{
+    return (this->CurrentAmmo.Bullet < this->DefaultAmmoData.Bullet && this->CurrentAmmo.Clips > 0);
+}
+
+FWeaponUIData ASTMBaseWeapon::GetUIData() const
+{
+    return (this->UIData);
 }
 
 void ASTMBaseWeapon::LogAmmo()

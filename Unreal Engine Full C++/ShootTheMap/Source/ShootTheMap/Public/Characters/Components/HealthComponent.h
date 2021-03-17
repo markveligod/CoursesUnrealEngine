@@ -4,10 +4,8 @@
 
 #include "Components/ActorComponent.h"
 #include "CoreMinimal.h"
+#include "STMCoreType.h"
 #include "HealthComponent.generated.h"
-
-DECLARE_MULTICAST_DELEGATE(FOnDeath);
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnDeathChange, float);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class SHOOTTHEMAP_API UHealthComponent : public UActorComponent
@@ -23,6 +21,9 @@ class SHOOTTHEMAP_API UHealthComponent : public UActorComponent
     UFUNCTION(BlueprintCallable)
     bool IsDead() const;
 
+    UFUNCTION(BlueprintCallable)
+    float GetHealthPercent() const;
+
     FOnDeath OnDeath;
     FOnDeathChange OnDeathChange;
 
@@ -35,7 +36,7 @@ class SHOOTTHEMAP_API UHealthComponent : public UActorComponent
     bool bAutoHeal = false;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health Editor",
-              meta = (ClampMin = "0.5", ClampMax = "10.0", EditCondition = "bAutoHeal"))
+              meta = (ClampMin = "0.01", ClampMax = "10.0", EditCondition = "bAutoHeal"))
     float HealUpdateTime = 1.f;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health Editor",

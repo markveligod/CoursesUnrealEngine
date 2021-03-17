@@ -4,25 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "STMCoreType.h"
 #include "STMBaseWeapon.generated.h"
 
+
 class USkeletalMeshComponent;
-
-USTRUCT(BlueprintType)
-struct FAmmoData
-{
-    GENERATED_USTRUCT_BODY()
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapons")
-    int32 Bullet;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapons", meta = (EditCondition = "!bInfinity"))
-    int32 Clips;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapons")
-    bool bInfinity;
-};
-
 
 UCLASS()
 class SHOOTTHEMAP_API ASTMBaseWeapon : public AActor
@@ -32,8 +18,15 @@ class SHOOTTHEMAP_API ASTMBaseWeapon : public AActor
   public:
     ASTMBaseWeapon();
 
+    FOnClimpEmptySignature OnClimpEmptySignature;
+
     virtual void StartFire();
     virtual void StopFire();
+
+    void ChangeClip();
+    bool CanReload() const;
+
+    FWeaponUIData GetUIData() const;
 
   protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Edit Weapon")
@@ -46,8 +39,10 @@ class SHOOTTHEMAP_API ASTMBaseWeapon : public AActor
     float TraceMaxDistance = 1500.f;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Edit Weapon")
-    FAmmoData DefaultAmmoData{15,10,false};
+    FAmmoData DefaultAmmoData{15, 10, false};
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Edit UI")
+    FWeaponUIData UIData;
 
     virtual void BeginPlay() override;
 
@@ -61,11 +56,8 @@ class SHOOTTHEMAP_API ASTMBaseWeapon : public AActor
     void DecreaseAmmo();
     bool IsAmmoEmpty() const;
     bool IsClipEmpty() const;
-    void ChangeClip();
     void LogAmmo();
+
   private:
     FAmmoData CurrentAmmo;
-
 };
-
-

@@ -4,21 +4,10 @@
 
 #include "Components/ActorComponent.h"
 #include "CoreMinimal.h"
+#include "STMCoreType.h"
 #include "STMWeaponComponent.generated.h"
 
 class ASTMBaseWeapon;
-
-USTRUCT(BlueprintType)
-struct FWeaponData
-{
-    GENERATED_USTRUCT_BODY();
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons")
-    TSubclassOf<ASTMBaseWeapon> WeaponClass;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons")
-    UAnimMontage *AnimReload;
-};
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class SHOOTTHEMAP_API USTMWeaponComponent : public UActorComponent
@@ -31,6 +20,9 @@ class SHOOTTHEMAP_API USTMWeaponComponent : public UActorComponent
     void StartFire();
     void StopFire();
     void NextWeapon();
+    void Reload();
+
+    bool GetWeaponUIData(FWeaponUIData &UIData);
 
   protected:
     virtual void BeginPlay() override;
@@ -55,16 +47,29 @@ class SHOOTTHEMAP_API USTMWeaponComponent : public UActorComponent
     UPROPERTY()
     TArray<ASTMBaseWeapon *> WeaponsPtr;
 
+    UPROPERTY()
+    UAnimMontage *CurrentReloadMontage = nullptr;
+
     int32 CurrentIndexWeapon = 0;
 
-    bool AnimInProgress = false;
+    bool EquipAnimInProgress = false;
+    bool ReloadAnimInProgress = false;
 
     void AttachWeaponToSocket(ASTMBaseWeapon *Weapon, USceneComponent *Mesh, const FName &Socket);
     void SpawnWeapons();
     void EquipWeapon(int32 WeaponIndex);
     void AnimEquip(UAnimMontage *Animation);
     void InitAnimations();
+
     void OnEquipFinish(USkeletalMeshComponent *Mesh);
+    void OnReloadFinish(USkeletalMeshComponent *Mesh);
+
     bool CanFire() const;
     bool CanEquip() const;
+    bool CanReload() const;
+
+    void OnEmptyClip();
+    void ChangeClip();
+
 };
+

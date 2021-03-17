@@ -6,8 +6,8 @@
 
 void ASTMRifleWeapon::StartFire()
 {
-    this->MakeShot();
     GetWorldTimerManager().SetTimer(this->ShotTimerHandle, this, &ASTMRifleWeapon::MakeShot, TimeBetweenShots, true);
+    this->MakeShot();
 }
 
 void ASTMRifleWeapon::StopFire()

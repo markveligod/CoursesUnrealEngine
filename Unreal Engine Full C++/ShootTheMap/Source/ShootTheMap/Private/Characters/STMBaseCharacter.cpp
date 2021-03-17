@@ -86,6 +86,7 @@ void ASTMBaseCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
         PlayerInputComponent->BindAction("Fire", IE_Pressed, this->WeaponComp, &USTMWeaponComponent::StartFire);
         PlayerInputComponent->BindAction("Fire", IE_Released, this->WeaponComp, &USTMWeaponComponent::StopFire);
         PlayerInputComponent->BindAction("NextWeapon", IE_Released, this->WeaponComp, &USTMWeaponComponent::NextWeapon);
+        PlayerInputComponent->BindAction("Reload", IE_Pressed, this->WeaponComp, &USTMWeaponComponent::Reload);
 
     }
 }
