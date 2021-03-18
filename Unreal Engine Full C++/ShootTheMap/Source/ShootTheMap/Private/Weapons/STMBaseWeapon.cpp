@@ -128,6 +128,11 @@ FWeaponUIData ASTMBaseWeapon::GetUIData() const
     return (this->UIData);
 }
 
+FAmmoData ASTMBaseWeapon::GetAmmoData() const
+{
+    return (this->CurrentAmmo);
+}
+
 void ASTMBaseWeapon::LogAmmo()
 {
     FString AmmoInfo = "Ammo: " + FString::FromInt(this->CurrentAmmo.Bullet) + "/";

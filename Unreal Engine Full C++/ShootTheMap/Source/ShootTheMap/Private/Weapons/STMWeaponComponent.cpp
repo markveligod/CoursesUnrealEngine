@@ -149,6 +149,16 @@ bool USTMWeaponComponent::GetWeaponUIData(FWeaponUIData &UIData)
     return false;
 }
 
+bool USTMWeaponComponent::GetAmmoUIData(FAmmoData &AmmoData) const
+{
+    if (this->CurrentWeapon)
+    {
+        AmmoData = this->CurrentWeapon->GetAmmoData();
+        return true;
+    }
+    return false;
+}
+
 void USTMWeaponComponent::InitAnimations()
 {
     auto EquipFinishNotify = AnimUtils::FindNotifyByClass<USTMEquipFinishAnimNotify>(this->AnimationEquip);

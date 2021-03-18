@@ -28,6 +28,8 @@ class SHOOTTHEMAP_API ASTMBaseWeapon : public AActor
 
     FWeaponUIData GetUIData() const;
 
+    FAmmoData GetAmmoData() const;
+
   protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Edit Weapon")
     USkeletalMeshComponent *WeaponMesh;

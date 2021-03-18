@@ -23,6 +23,7 @@ class SHOOTTHEMAP_API USTMWeaponComponent : public UActorComponent
     void Reload();
 
     bool GetWeaponUIData(FWeaponUIData &UIData);
+    bool GetAmmoUIData(FAmmoData &AmmoData) const;
 
   protected:
     virtual void BeginPlay() override;

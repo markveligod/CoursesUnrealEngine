@@ -6,24 +6,36 @@
 
 float USTMPlayerHudWidget::GetHealthPrecent() const
 {
-    const auto Player = GetOwningPlayerPawn();
-    if (!Player)
-        return (0.f);
-    const auto Component = Player->GetComponentByClass(UHealthComponent::StaticClass());
-    const auto HealthComp = Cast<UHealthComponent>(Component);
+    const auto HealthComp = this->GetComponent<UHealthComponent>();
     if (!HealthComp)
         return (0.f);
     return (HealthComp->GetHealthPercent());
 }
 
-bool USTMPlayerHudWidget::GetWeaponUIData(FWeaponUIData &UIData)
+bool USTMPlayerHudWidget::GetCurrentWeaponUIData(FWeaponUIData &UIData)
 {
-    const auto Player = GetOwningPlayerPawn();
-    if (!Player)
-        return (false);
-    const auto Component = Player->GetComponentByClass(USTMWeaponComponent::StaticClass());
-    const auto WeaponComp = Cast<USTMWeaponComponent>(Component);
+    const auto WeaponComp = this->GetComponent<USTMWeaponComponent>();
     if (!WeaponComp)
         return (false);
     return (WeaponComp->GetWeaponUIData(UIData));
+}
+
+bool USTMPlayerHudWidget::GetCurrentAmmoData(FAmmoData &AmmoData)
+{
+    const auto WeaponComp = this->GetComponent<USTMWeaponComponent>();
+    if (!WeaponComp)
+        return (false);
+    return (WeaponComp->GetAmmoUIData(AmmoData));
+}
+
+bool USTMPlayerHudWidget::IsPlayerAlive() const
+{
+    const auto HealthComp = this->GetComponent<UHealthComponent>();
+    return (HealthComp && !HealthComp->IsDead());
+}
+
+bool USTMPlayerHudWidget::IsPlayerSpectating() const
+{
+    const auto Contoller = GetOwningPlayer();
+    return (Contoller && Contoller->GetStateName() == NAME_Spectating);
 }
