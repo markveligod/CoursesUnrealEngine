@@ -23,6 +23,7 @@ void ASTMBasePickUp::BeginPlay()
 {
     Super::BeginPlay();
     check(this->CollisionComponent);
+    this->GenerateRotationYaw();
 }
 
 void ASTMBasePickUp::NotifyActorBeginOverlap(AActor *OtherActor)
@@ -41,6 +42,8 @@ void ASTMBasePickUp::NotifyActorBeginOverlap(AActor *OtherActor)
 void ASTMBasePickUp::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
+
+    AddActorLocalRotation(FRotator(0.f, this->RotationYaw, 0.f));
 }
 
 void ASTMBasePickUp::PickUpWasTaken()
@@ -54,6 +57,7 @@ void ASTMBasePickUp::PickUpWasTaken()
 
 void ASTMBasePickUp::Respawn()
 {
+    this->GenerateRotationYaw();
     this->CollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
     if (GetRootComponent())
         GetRootComponent()->SetVisibility(true, true);
@@ -62,4 +66,10 @@ void ASTMBasePickUp::Respawn()
 bool ASTMBasePickUp::GivePickUpTo(APawn *Player)
 {
     return (false);
+}
+
+void ASTMBasePickUp::GenerateRotationYaw()
+{
+    this->Direction = FMath::RandBool() ? 1.f : (-1.f);
+    this->RotationYaw = FMath::RandRange(1.f, 2.f) * this->Direction;
 }

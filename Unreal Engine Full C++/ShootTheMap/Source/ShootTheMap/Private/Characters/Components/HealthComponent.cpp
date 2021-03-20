@@ -34,6 +34,14 @@ float UHealthComponent::GetHealthPercent() const
     return (this->Health / this->MaxHealth);
 }
 
+bool UHealthComponent::TryToAddHealth(float HealthAmount)
+{
+    if (HealthAmount <= 0.f || FMath::IsNearlyEqual(this->Health, this->MaxHealth))
+        return false;
+    this->SetHealth(this->Health + HealthAmount);
+    return (true);
+}
+
 // Called when the game starts
 void UHealthComponent::BeginPlay()
 {

@@ -32,14 +32,4 @@ class SHOOTTHEMAP_API USTMPlayerHudWidget : public UUserWidget
     bool IsPlayerSpectating() const;
 
     private:
-    template <typename T> T *GetComponent() const;
 };
-
-template <typename T> T * USTMPlayerHudWidget::GetComponent() const
-{
-    const auto Player = GetOwningPlayerPawn();
-    if (!Player)
-        return (nullptr);
-    const auto Component = Player->GetComponentByClass(T::StaticClass());
-    return (Cast<T>(Component));
-}

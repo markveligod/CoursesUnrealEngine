@@ -24,6 +24,7 @@ void ASTMLauncherWeapon::MakeShot()
     FHitResult HitResult;
     FCollisionQueryParams CollisionQueryParams;
     CollisionQueryParams.AddIgnoredActor(GetOwner());
+    CollisionQueryParams.bReturnPhysicalMaterial = true;
     GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility,
                                          CollisionQueryParams);
 

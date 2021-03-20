@@ -3,6 +3,19 @@
 
 #include "Weapons/STMRifleWeapon.h"
 #include "DrawDebugHelpers.h"
+#include "STMWeaponVFXComponent.h"
+
+
+ASTMRifleWeapon::ASTMRifleWeapon()
+{
+    this->WeaponVFXComponent = CreateDefaultSubobject<USTMWeaponVFXComponent>("Weapon VFX Component");
+}
+
+void ASTMRifleWeapon::BeginPlay()
+{
+    Super::BeginPlay();
+    check(this->WeaponVFXComponent);
+}
 
 void ASTMRifleWeapon::StartFire()
 {
@@ -32,6 +45,7 @@ void ASTMRifleWeapon::MakeShot()
     FHitResult HitResult;
     FCollisionQueryParams CollisionQueryParams;
     CollisionQueryParams.AddIgnoredActor(GetOwner());
+    CollisionQueryParams.bReturnPhysicalMaterial = true;
     GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility,
                                          CollisionQueryParams);
     this->MakeHit(HitResult, TraceStart, TraceEnd);
@@ -56,11 +70,10 @@ void ASTMRifleWeapon::MakeHit(FHitResult &HitResult, FVector &TraceStart, FVecto
 {
     if (HitResult.bBlockingHit)
     {
-        DrawDebugLine(GetWorld(), this->GetMuzzleWorldLocation(), HitResult.ImpactPoint, FColor::Red, false, 3.f, 0,
-                      3.f);
-        DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.f, 24, FColor::Red, false, 5.f);
-
+        //DrawDebugLine(GetWorld(), this->GetMuzzleWorldLocation(), HitResult.ImpactPoint, FColor::Red, false, 3.f, 0,3.f);
+        //DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.f, 24, FColor::Red, false, 5.f);
         this->MakeDamage(HitResult);
+        this->WeaponVFXComponent->PlayImpact(HitResult);
     }
     else
     {

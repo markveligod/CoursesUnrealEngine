@@ -5,6 +5,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "DrawDebugHelpers.h"
 #include "Kismet/GameplayStatics.h"
+#include "STMWeaponVFXComponent.h"
 
 // Sets default values
 ASTMProjectile::ASTMProjectile()
@@ -16,11 +17,14 @@ ASTMProjectile::ASTMProjectile()
     this->CollisionComponent->InitSphereRadius(5.f);
     this->CollisionComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
     this->CollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
+    this->CollisionComponent->bReturnMaterialOnMove = true;
     SetRootComponent(this->CollisionComponent);
 
     this->MovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>("Projectile Movement Component");
     this->MovementComponent->InitialSpeed = 2000.f;
     this->MovementComponent->ProjectileGravityScale = 0.f;
+
+    this->WeaponVFXComponent = CreateDefaultSubobject<USTMWeaponVFXComponent>("Weapon VFX Component");
 }
 
 void ASTMProjectile::SetShotDirection(const FVector Direction)
@@ -34,11 +38,13 @@ void ASTMProjectile::BeginPlay()
     Super::BeginPlay();
     check(this->MovementComponent);
     check(this->CollisionComponent);
+    check(this->WeaponVFXComponent);
 
     this->MovementComponent->Velocity = this->ShootDirection * MovementComponent->InitialSpeed;
     this->CollisionComponent->IgnoreActorWhenMoving(GetOwner(), true);
     this->CollisionComponent->OnComponentHit.AddDynamic(this, &ASTMProjectile::OnProjectileHit);
     SetLifeSpan(this->LifeSeconds);
+
 }
 
 void ASTMProjectile::OnProjectileHit(UPrimitiveComponent *HitComponent,
@@ -61,6 +67,7 @@ void ASTMProjectile::OnProjectileHit(UPrimitiveComponent *HitComponent,
         this->DoFullDamage);
     DrawDebugSphere(GetWorld(), GetActorLocation(), DamageRadius, 24, FColor::Red, false, 5.f);
     Destroy();
+    this->WeaponVFXComponent->PlayImpact(Hit);
 }
 
 AController * ASTMProjectile::GetController() const

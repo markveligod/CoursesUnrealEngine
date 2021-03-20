@@ -25,6 +25,8 @@ class SHOOTTHEMAP_API USTMWeaponComponent : public UActorComponent
     bool GetWeaponUIData(FWeaponUIData &UIData);
     bool GetAmmoUIData(FAmmoData &AmmoData) const;
 
+    bool TryToAddAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType, int32 ClipsAmount);
+
   protected:
     virtual void BeginPlay() override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
@@ -69,7 +71,7 @@ class SHOOTTHEMAP_API USTMWeaponComponent : public UActorComponent
     bool CanEquip() const;
     bool CanReload() const;
 
-    void OnEmptyClip();
+    void OnEmptyClip(ASTMBaseWeapon *AmmoEmptyWeapon);
     void ChangeClip();
 
 };

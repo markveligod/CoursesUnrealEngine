@@ -89,7 +89,7 @@ void ASTMBaseWeapon::DecreaseAmmo()
     if (this->IsClipEmpty() && !this->IsAmmoEmpty())
     {
         //StopFire();
-        this->OnClimpEmptySignature.Broadcast();
+        this->OnClimpEmptySignature.Broadcast(this);
     }
 }
 
@@ -133,12 +133,51 @@ FAmmoData ASTMBaseWeapon::GetAmmoData() const
     return (this->CurrentAmmo);
 }
 
+bool ASTMBaseWeapon::TryToAddAmmo(int32 ClipsAmount)
+{
+    if (this->CurrentAmmo.bInfinity || this->IsAmmoFull() || ClipsAmount <= 0)
+        return (false);
+
+    if (IsAmmoEmpty())
+    {
+        UE_LOG(LogBaseWeapon, Display, TEXT("Actor: %s => Ammo is Empty"), *GetOwner()->GetName());
+        this->CurrentAmmo.Clips = FMath::Clamp(ClipsAmount, 0, this->DefaultAmmoData.Clips + 1);
+        this->OnClimpEmptySignature.Broadcast(this);
+    }
+    else if (this->CurrentAmmo.Clips < this->DefaultAmmoData.Clips)
+    {
+        const auto NextClips = this->CurrentAmmo.Clips + ClipsAmount;
+        if (this->DefaultAmmoData.Clips - NextClips >= 0)
+        {
+            this->CurrentAmmo.Clips = NextClips;
+            UE_LOG(LogBaseWeapon, Display, TEXT("Actor: %s => (NextClips >= 0)"), *GetOwner()->GetName());
+        }
+        else
+        {
+            this->CurrentAmmo.Clips = this->DefaultAmmoData.Clips;
+            this->CurrentAmmo.Bullet = this->DefaultAmmoData.Bullet;
+            UE_LOG(LogBaseWeapon, Display, TEXT("Actor: %s => Ammo is full"), *GetOwner()->GetName());
+        }
+    }
+    else
+    {
+        this->CurrentAmmo.Bullet = this->DefaultAmmoData.Bullet;
+        UE_LOG(LogBaseWeapon, Display, TEXT("Actor: %s => Clips is full"), *GetOwner()->GetName());
+    }
+    return (true);
+}
+
 void ASTMBaseWeapon::LogAmmo()
 {
     FString AmmoInfo = "Ammo: " + FString::FromInt(this->CurrentAmmo.Bullet) + "/";
     AmmoInfo += (this->CurrentAmmo.bInfinity ? "Infinity" : FString::FromInt(this->CurrentAmmo.Clips));
     UE_LOG(LogBaseWeapon, Warning, TEXT("%s"), *AmmoInfo);
 
+}
+
+bool ASTMBaseWeapon::IsAmmoFull() const
+{
+    return (this->CurrentAmmo.Clips == this->DefaultAmmoData.Clips && this->CurrentAmmo.Bullet == this->DefaultAmmoData.Bullet);
 }
 
 

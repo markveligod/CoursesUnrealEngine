@@ -27,6 +27,8 @@ class SHOOTTHEMAP_API UHealthComponent : public UActorComponent
     FOnDeath OnDeath;
     FOnDeathChange OnDeathChange;
 
+    bool TryToAddHealth(float HealthAmount);
+
   protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health Editor",
               meta = (ClampMin = "1.0", ClampMax = "200.0"))

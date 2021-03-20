@@ -8,6 +8,7 @@
 
 class USphereComponent;
 class UProjectileMovementComponent;
+class USTMWeaponVFXComponent;
 
 UCLASS()
 class SHOOTTHEMAP_API ASTMProjectile : public AActor
@@ -36,6 +37,9 @@ class SHOOTTHEMAP_API ASTMProjectile : public AActor
 
     UPROPERTY(EditDefaultsOnly, Category = "Weapon")
     bool DoFullDamage = false;
+
+    UPROPERTY(VisibleAnyWhere, Category = "VFX")
+    USTMWeaponVFXComponent *WeaponVFXComponent;
 
     virtual void BeginPlay() override;
 

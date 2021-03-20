@@ -30,6 +30,8 @@ class SHOOTTHEMAP_API ASTMBaseWeapon : public AActor
 
     FAmmoData GetAmmoData() const;
 
+    bool TryToAddAmmo(int32 ClipsAmount);
+
   protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Edit Weapon")
     USkeletalMeshComponent *WeaponMesh;
@@ -59,6 +61,8 @@ class SHOOTTHEMAP_API ASTMBaseWeapon : public AActor
     bool IsAmmoEmpty() const;
     bool IsClipEmpty() const;
     void LogAmmo();
+
+    bool IsAmmoFull() const;
 
   private:
     FAmmoData CurrentAmmo;

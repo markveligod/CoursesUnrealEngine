@@ -1,8 +1,11 @@
 #pragma once
+
 #include "STMCoreType.generated.h"
 // Weapon editor
 
-DECLARE_MULTICAST_DELEGATE(FOnClimpEmptySignature);
+class ASTMBaseWeapon;
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnClimpEmptySignature, ASTMBaseWeapon*);
 
 USTRUCT(BlueprintType)
 struct FAmmoData
@@ -49,4 +52,38 @@ struct FWeaponUIData
     UTexture2D *MainIcon;
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     UTexture2D *CrosshairIcon;
+};
+
+//VFX
+
+class UNiagaraSystem;
+
+USTRUCT(BlueprintType)
+struct FDecalData
+{
+    GENERATED_USTRUCT_BODY();
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    UMaterialInterface *Material;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    FVector Size = FVector(10.f);
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    float LifeTime = 5.f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    float FadeOutTime = 0.7f;
+
+};
+
+USTRUCT(BlueprintType)
+struct FImpactData
+{
+    GENERATED_USTRUCT_BODY();
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    UNiagaraSystem *NiagaraEffect;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    FDecalData DecalData;
 };

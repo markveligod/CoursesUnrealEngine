@@ -159,6 +159,18 @@ bool USTMWeaponComponent::GetAmmoUIData(FAmmoData &AmmoData) const
     return false;
 }
 
+bool USTMWeaponComponent::TryToAddAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType, int32 ClipsAmount)
+{
+    for (auto Weapon : this->WeaponsPtr)
+    {
+        if (Weapon && Weapon->IsA(WeaponType))
+        {
+            return (Weapon->TryToAddAmmo(ClipsAmount));
+        }
+    }
+    return false;
+}
+
 void USTMWeaponComponent::InitAnimations()
 {
     auto EquipFinishNotify = AnimUtils::FindNotifyByClass<USTMEquipFinishAnimNotify>(this->AnimationEquip);
@@ -202,6 +214,7 @@ void USTMWeaponComponent::OnReloadFinish(USkeletalMeshComponent *Mesh)
 
     this->ReloadAnimInProgress = false;
     UE_LOG(LogWeaponComponent, Warning, TEXT("Finished reload"));
+    this->CurrentWeapon->ChangeClip();
 }
 
 bool USTMWeaponComponent::CanFire() const
@@ -219,9 +232,14 @@ bool USTMWeaponComponent::CanReload() const
     return (CurrentWeapon && !this->EquipAnimInProgress && !ReloadAnimInProgress && this->CurrentWeapon->CanReload());
 }
 
-void USTMWeaponComponent::OnEmptyClip()
+void USTMWeaponComponent::OnEmptyClip(ASTMBaseWeapon *AmmoEmptyWeapon)
 {
-    this->ChangeClip();
+    if (!AmmoEmptyWeapon)
+        return;
+    if (AmmoEmptyWeapon == this->CurrentWeapon)
+        this->ChangeClip();
+    else
+        AmmoEmptyWeapon->ChangeClip();
 }
 
 void USTMWeaponComponent::ChangeClip()
@@ -232,5 +250,4 @@ void USTMWeaponComponent::ChangeClip()
     this->CurrentWeapon->StopFire();
     this->ReloadAnimInProgress = true;
     Character->PlayAnimMontage(this->CurrentReloadMontage);
-    this->CurrentWeapon->ChangeClip();
 }

@@ -15,7 +15,7 @@ class SHOOTTHEMAP_API ASTMBasePickUp : public AActor
 
   public:
     ASTMBasePickUp();
-
+    virtual void Tick(float DeltaTime) override;
   protected:
     UPROPERTY(VisibleAnywhere, Category = "PickUp Editor Base")
     USphereComponent *CollisionComponent;
@@ -26,11 +26,12 @@ class SHOOTTHEMAP_API ASTMBasePickUp : public AActor
     virtual void BeginPlay() override;
     virtual void NotifyActorBeginOverlap(AActor *OtherActor) override;
 
-  public:
-    virtual void Tick(float DeltaTime) override;
-
   private:
+    float RotationYaw = 0.f;
+    float Direction;
     void PickUpWasTaken();
     void Respawn();
     virtual bool GivePickUpTo(APawn *Player);
+
+    void GenerateRotationYaw();
 };
