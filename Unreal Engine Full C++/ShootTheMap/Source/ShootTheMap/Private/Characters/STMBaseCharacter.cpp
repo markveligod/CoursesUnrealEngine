@@ -53,6 +53,7 @@ void ASTMBaseCharacter::BeginPlay()
     check(this->HealthTextComp);
     check(GetCharacterMovement());
     check(this->WeaponComp);
+    check(GetMesh());
 
     this->OnHealthChanged(this->Health->GetHealth());
     this->Health->OnDeath.AddUObject(this, &ASTMBaseCharacter::OnDeath);
@@ -135,7 +136,7 @@ void ASTMBaseCharacter::StopRun()
 void ASTMBaseCharacter::OnDeath()
 {
     UE_LOG(LogCharacter, Warning, TEXT("Player %s is Dead!"), *GetName());
-    PlayAnimMontage(this->DeathAnimMontage);
+    //PlayAnimMontage(this->DeathAnimMontage);
     GetCharacterMovement()->DisableMovement();
     GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
     SetLifeSpan(5.f);
@@ -144,6 +145,8 @@ void ASTMBaseCharacter::OnDeath()
         Controller->ChangeState(NAME_Spectating);
     }
     this->WeaponComp->StopFire();
+    GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+    GetMesh()->SetSimulatePhysics(true);
 }
 
 void ASTMBaseCharacter::OnHealthChanged(float NewHealth)
