@@ -39,7 +39,7 @@ struct FWeaponData
 // Health editor
 
 DECLARE_MULTICAST_DELEGATE(FOnDeath);
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnDeathChange, float);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnDeathChange, float, float);
 
 
 //Widget Editor

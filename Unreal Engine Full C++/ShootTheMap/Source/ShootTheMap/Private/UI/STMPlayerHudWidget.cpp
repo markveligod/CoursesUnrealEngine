@@ -40,3 +40,20 @@ bool USTMPlayerHudWidget::IsPlayerSpectating() const
     const auto Contoller = GetOwningPlayer();
     return (Contoller && Contoller->GetStateName() == NAME_Spectating);
 }
+
+bool USTMPlayerHudWidget::Initialize()
+{
+    const auto HealthComp = STMUtils::GetComponent<UHealthComponent>(GetOwningPlayerPawn());
+    if (HealthComp)
+    {
+        HealthComp->OnDeathChange.AddUObject(this, &USTMPlayerHudWidget::OnHealthChanched);
+    }
+        
+    return (Super::Initialize());
+}
+
+void USTMPlayerHudWidget::OnHealthChanched(float Health, float HealthDelta)
+{
+    if (HealthDelta < 0)
+        this->OnTakeDamage();
+}

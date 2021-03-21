@@ -55,7 +55,7 @@ void ASTMBaseCharacter::BeginPlay()
     check(this->WeaponComp);
     check(GetMesh());
 
-    this->OnHealthChanged(this->Health->GetHealth());
+    this->OnHealthChanged(this->Health->GetHealth(), 0.f);
     this->Health->OnDeath.AddUObject(this, &ASTMBaseCharacter::OnDeath);
     this->Health->OnDeathChange.AddUObject(this, &ASTMBaseCharacter::OnHealthChanged);
 
@@ -149,7 +149,7 @@ void ASTMBaseCharacter::OnDeath()
     GetMesh()->SetSimulatePhysics(true);
 }
 
-void ASTMBaseCharacter::OnHealthChanged(float NewHealth)
+void ASTMBaseCharacter::OnHealthChanged(float NewHealth, float HealthDelta)
 {
     this->HealthTextComp->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), NewHealth)));
 }

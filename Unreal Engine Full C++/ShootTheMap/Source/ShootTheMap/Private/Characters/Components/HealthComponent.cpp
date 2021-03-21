@@ -6,6 +6,9 @@
 //#include "Characters/Dev/SMPIceDamageType.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
+#include "GameFramework/Pawn.h"
+#include "GameFramework/Controller.h"
+#include "Camera/CameraShake.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogHealthComponent, All, All)
 
@@ -90,6 +93,7 @@ void UHealthComponent::OnTakeAnyDamageHandle(AActor *DamagedActor, float Damage,
             UE_LOG(LogHealthComponent, Warning, TEXT("So COLD!!!"));
         }
     }*/
+    this->PlayCameraShake();
 }
 
 void UHealthComponent::HealUpdate()
@@ -106,6 +110,26 @@ void UHealthComponent::HealUpdate()
 
 void UHealthComponent::SetHealth(float NewHealth)
 {
-    this->Health = FMath::Clamp(NewHealth, 0.f, this->MaxHealth);
-    OnDeathChange.Broadcast(this->Health);
+    const auto NextHealth = FMath::Clamp(NewHealth, 0.f, this->MaxHealth);
+    const auto HealthDelta = NextHealth - this->Health;
+
+    this->Health = NextHealth;
+    OnDeathChange.Broadcast(this->Health, HealthDelta);
+}
+
+void UHealthComponent::PlayCameraShake()
+{
+    if (this->IsDead())
+        return;
+
+    const auto Player = Cast<APawn>(GetOwner());
+    if (!Player)
+        return;
+
+    const auto Controller = Player->GetController<APlayerController>();
+    if (!Controller || !Controller->PlayerCameraManager)
+        return;
+
+    Controller->PlayerCameraManager->StartCameraShake(this->CameraShake);
+
 }

@@ -7,6 +7,8 @@
 #include "STMCoreType.h"
 #include "HealthComponent.generated.h"
 
+class UCameraShakeBase;
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class SHOOTTHEMAP_API UHealthComponent : public UActorComponent
 {
@@ -49,6 +51,9 @@ class SHOOTTHEMAP_API UHealthComponent : public UActorComponent
               meta = (ClampMin = "0.5", ClampMax = "10.0", EditCondition = "bAutoHeal"))
     float HealModifier = 5.f;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    TSubclassOf<UCameraShakeBase> CameraShake;
+
     // Called when the game starts
     virtual void BeginPlay() override;
 
@@ -62,4 +67,6 @@ class SHOOTTHEMAP_API UHealthComponent : public UActorComponent
 
     void HealUpdate();
     void SetHealth(float NewHealth);
+
+    void PlayCameraShake();
 };

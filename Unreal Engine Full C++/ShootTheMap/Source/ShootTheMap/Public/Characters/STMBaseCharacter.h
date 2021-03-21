@@ -80,7 +80,7 @@ class SHOOTTHEMAP_API ASTMBaseCharacter : public ACharacter
     void StopRun();
 
     void OnDeath();
-    void OnHealthChanged(float NewHealth);
+    void OnHealthChanged(float NewHealth, float HealthDelta);
 
     UFUNCTION()
     void OnGroundLanded(const FHitResult &Hit);
