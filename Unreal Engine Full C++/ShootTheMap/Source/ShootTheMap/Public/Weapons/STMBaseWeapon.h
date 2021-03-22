@@ -7,7 +7,8 @@
 #include "STMCoreType.h"
 #include "STMBaseWeapon.generated.h"
 
-
+class UNiagaraSystem;
+class UNiagaraComponent;
 class USkeletalMeshComponent;
 
 UCLASS()
@@ -48,6 +49,9 @@ class SHOOTTHEMAP_API ASTMBaseWeapon : public AActor
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Edit UI")
     FWeaponUIData UIData;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Edit VFX")
+    UNiagaraSystem *MuzzleFX;
+
     virtual void BeginPlay() override;
 
     APlayerController *GetPlayerController() const;
@@ -64,6 +68,7 @@ class SHOOTTHEMAP_API ASTMBaseWeapon : public AActor
 
     bool IsAmmoFull() const;
 
+    UNiagaraComponent *SpawnMuzzleFX();
   private:
     FAmmoData CurrentAmmo;
 };

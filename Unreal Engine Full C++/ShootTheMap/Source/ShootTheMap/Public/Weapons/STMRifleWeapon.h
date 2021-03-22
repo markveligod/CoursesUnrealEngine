@@ -6,7 +6,9 @@
 #include "Weapons/STMBaseWeapon.h"
 #include "STMRifleWeapon.generated.h"
 
+class UNiagaraComponent;
 class USTMWeaponVFXComponent;
+class UNiagaraSystem;
 
 /**
  *
@@ -19,7 +21,7 @@ class SHOOTTHEMAP_API ASTMRifleWeapon : public ASTMBaseWeapon
     ASTMRifleWeapon();
     virtual void StartFire() override;
     virtual void StopFire() override;
-    
+
   protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     float TimeBetweenShots = 0.1f;
@@ -33,11 +35,24 @@ class SHOOTTHEMAP_API ASTMRifleWeapon : public ASTMBaseWeapon
     UPROPERTY(VisibleAnyWhere, Category = "VFX")
     USTMWeaponVFXComponent *WeaponVFXComponent;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    UNiagaraSystem *TraceFX;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    FString TraceTargetName = "TraceTarget";
+
     virtual void BeginPlay() override;
     virtual void MakeShot() override;
     virtual bool GetTraceData(FVector &TraceStart, FVector &TraceEnd) const override;
     void MakeDamage(FHitResult &HitResult);
     void MakeHit(FHitResult &HitResult, FVector &TraceStart, FVector &TraceEnd);
+
   private:
+    UPROPERTY()
+    UNiagaraComponent *MuzzleFXComponent;
     FTimerHandle ShotTimerHandle;
+
+    void InitMuzzleFX();
+    void SetMuzzleVisibility(bool Visible);
+    void SpawnTraceFX(const FVector& TraceStart, const FVector& TraceEnd);
 };

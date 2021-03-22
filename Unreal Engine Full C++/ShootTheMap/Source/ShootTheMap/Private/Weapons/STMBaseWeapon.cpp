@@ -6,6 +6,9 @@
 #include "DrawDebugHelpers.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/PlayerController.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
+
 
 DEFINE_LOG_CATEGORY_STATIC(LogBaseWeapon, All, All);
 
@@ -178,6 +181,17 @@ void ASTMBaseWeapon::LogAmmo()
 bool ASTMBaseWeapon::IsAmmoFull() const
 {
     return (this->CurrentAmmo.Clips == this->DefaultAmmoData.Clips && this->CurrentAmmo.Bullet == this->DefaultAmmoData.Bullet);
+}
+
+UNiagaraComponent * ASTMBaseWeapon::SpawnMuzzleFX()
+{
+    return (UNiagaraFunctionLibrary::SpawnSystemAttached(this->MuzzleFX,   //
+                                                 this->WeaponMesh, //
+                                                 this->MuzzleSocketName,//
+        FVector::ZeroVector,//
+        FRotator::ZeroRotator,//
+        EAttachLocation::SnapToTarget,//
+        true));
 }
 
 

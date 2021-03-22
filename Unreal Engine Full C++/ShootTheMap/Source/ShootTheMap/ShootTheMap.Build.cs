@@ -8,11 +8,11 @@ public class ShootTheMap : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Niagara", "PhysicsCore" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Niagara", "PhysicsCore", "GameplayTasks", "NavigationSystem" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
-		PublicIncludePaths.AddRange(new string[] { "ShootTheMap/Public/Characters", "ShootTheMap/Public/Characters/Components", "ShootTheMap/Public/Characters/Dev", "ShootTheMap/Public/Weapons", "ShootTheMap/Public/UI", "ShootTheMap/Public/Notifys", "ShootTheMap/Public/PickUps" });
+		PublicIncludePaths.AddRange(new string[] { "ShootTheMap/Public/Characters", "ShootTheMap/Public/Characters/Components", "ShootTheMap/Public/Characters/Dev", "ShootTheMap/Public/Weapons", "ShootTheMap/Public/UI", "ShootTheMap/Public/Notifys", "ShootTheMap/Public/PickUps", "ShootTheMap/Public/AI", "ShootTheMap/Public/AI/Tasks" });
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

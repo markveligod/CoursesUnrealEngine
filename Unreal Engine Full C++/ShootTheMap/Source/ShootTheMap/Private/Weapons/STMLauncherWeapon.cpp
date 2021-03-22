@@ -40,6 +40,7 @@ void ASTMLauncherWeapon::MakeShot()
         Projectile->FinishSpawning(SpawnTransform);
     }
     DecreaseAmmo();
+    SpawnMuzzleFX();
     /* auto Projectile = UGameplayStatics::BeginDeferredActorSpawnFromClass(GetWorld(), this->ProjectileClass, SpawnTransform);*/
     //set projectile params
     /*UGameplayStatics::FinishSpawningActor(Projectile, SpawnTransform);*/

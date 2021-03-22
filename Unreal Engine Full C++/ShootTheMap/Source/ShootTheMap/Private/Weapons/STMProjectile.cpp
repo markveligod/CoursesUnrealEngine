@@ -65,7 +65,7 @@ void ASTMProjectile::OnProjectileHit(UPrimitiveComponent *HitComponent,
         this,
         this->GetController(),
         this->DoFullDamage);
-    DrawDebugSphere(GetWorld(), GetActorLocation(), DamageRadius, 24, FColor::Red, false, 5.f);
+    //DrawDebugSphere(GetWorld(), GetActorLocation(), DamageRadius, 24, FColor::Red, false, 5.f);
     Destroy();
     this->WeaponVFXComponent->PlayImpact(Hit);
 }
