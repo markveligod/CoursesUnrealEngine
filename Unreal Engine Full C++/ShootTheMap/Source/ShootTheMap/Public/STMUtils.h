@@ -5,10 +5,10 @@
 class STMUtils
 {
   public:
-    template <typename T> static T *GetComponent(APawn *Player);
+    template <typename T> static T *GetComponent(AActor *Player);
 };
 
-template <typename T> T *STMUtils::GetComponent(APawn *Player)
+template <typename T> T *STMUtils::GetComponent(AActor *Player)
 {
     if (!Player)
         return (nullptr);

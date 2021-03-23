@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "STMAICharacter.generated.h"
 
+class UBehaviorTree;
+
 /**
  *
  */
@@ -16,4 +18,7 @@ class SHOOTTHEMAP_API ASTMAICharacter : public ASTMBaseCharacter
 
   public:
     ASTMAICharacter(const FObjectInitializer &ObjInit);
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Tree")
+    UBehaviorTree *BehaviorTreeAsset;
 };
