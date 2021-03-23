@@ -23,7 +23,13 @@ class SHOOTTHEMAP_API ASTMAIController : public AAIController
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Perception")
     USTMAIPerceptionComponent *STMAIPerceptionComponent;
 
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+    FName FocusOnKeyName = "EnemyActor";
+
     virtual void OnPossess(APawn *InPawn) override;
 
     virtual void Tick(float DeltaSeconds) override;
+
+    private:
+    AActor *GetFocusActor() const;
 };

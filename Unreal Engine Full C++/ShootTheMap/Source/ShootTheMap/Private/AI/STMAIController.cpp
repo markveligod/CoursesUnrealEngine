@@ -4,6 +4,7 @@
 #include "AI/STMAIController.h"
 #include "AI/STMAICharacter.h"
 #include "AI/STMAIPerceptionComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 ASTMAIController::ASTMAIController()
 {
@@ -25,6 +26,13 @@ void ASTMAIController::OnPossess(APawn *InPawn)
 void ASTMAIController::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
-    auto AimActor = this->STMAIPerceptionComponent->GetClosesEnemy();
+    auto AimActor = this->GetFocusActor();
     SetFocus(AimActor);
+}
+
+AActor * ASTMAIController::GetFocusActor() const
+{
+    if (!GetBlackboardComponent())
+        return nullptr;
+    return (Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(this->FocusOnKeyName)));
 }

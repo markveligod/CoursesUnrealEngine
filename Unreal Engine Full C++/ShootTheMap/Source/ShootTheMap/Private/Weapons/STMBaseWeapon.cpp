@@ -55,10 +55,22 @@ APlayerController *ASTMBaseWeapon::GetPlayerController() const
 
 bool ASTMBaseWeapon::GetPlayerViewPoint(FVector &ViewLocation, FRotator &ViewRotation) const
 {
-    const auto Controller = this->GetPlayerController();
-    if (!Controller)
-        return (false);
-    Controller->GetPlayerViewPoint(ViewLocation, ViewRotation);
+    const auto STMCharacter = Cast<ACharacter>(GetOwner());
+    if (!STMCharacter)
+        return false;
+
+    if (STMCharacter->IsPlayerControlled())
+    {
+        const auto Controller = this->GetPlayerController();
+        if (!Controller)
+            return (false);
+        Controller->GetPlayerViewPoint(ViewLocation, ViewRotation);
+    }
+    else
+    {
+        ViewLocation = this->GetMuzzleWorldLocation();
+        ViewRotation = WeaponMesh->GetSocketRotation(this->MuzzleSocketName);
+    }
     return (true);
 }
 

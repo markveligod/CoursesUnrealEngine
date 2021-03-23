@@ -19,4 +19,6 @@ class SHOOTTHEMAP_API USTMBTEnemyService : public UBTService
   protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
     FBlackboardKeySelector EnemyActorKey;
+
+    virtual void TickNode(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory, float DeltaSeconds) override;
 };
