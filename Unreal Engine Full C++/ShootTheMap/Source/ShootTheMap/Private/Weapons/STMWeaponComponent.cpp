@@ -1,7 +1,6 @@
 // ShootTheMap
 
 #include "Weapons/STMWeaponComponent.h"
-#include "Characters/STMBaseCharacter.h"
 #include "GameFramework/Character.h"
 #include "Weapons/STMBaseWeapon.h"
 #include "Notifys/STMEquipFinishAnimNotify.h"

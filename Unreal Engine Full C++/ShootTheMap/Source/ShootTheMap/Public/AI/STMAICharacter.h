@@ -21,4 +21,7 @@ class SHOOTTHEMAP_API ASTMAICharacter : public ASTMBaseCharacter
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Tree")
     UBehaviorTree *BehaviorTreeAsset;
+
+  protected:
+    virtual void OnDeath() override;
 };

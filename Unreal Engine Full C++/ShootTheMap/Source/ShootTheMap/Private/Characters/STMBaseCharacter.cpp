@@ -52,7 +52,7 @@ void ASTMBaseCharacter::BeginPlay()
     check(this->Health);
     check(this->HealthTextComp);
     check(GetCharacterMovement());
-    check(this->WeaponComp);
+    //check(this->WeaponComp);
     check(GetMesh());
 
     this->OnHealthChanged(this->Health->GetHealth(), 0.f);
