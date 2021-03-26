@@ -34,7 +34,7 @@ class SHOOTTHEMAP_API ASTMBaseWeapon : public AActor
     bool TryToAddAmmo(int32 ClipsAmount);
 
     bool IsAmmoEmpty() const;
-
+    bool IsAmmoFull() const;
 
   protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Edit Weapon")
@@ -57,7 +57,6 @@ class SHOOTTHEMAP_API ASTMBaseWeapon : public AActor
 
     virtual void BeginPlay() override;
 
-    APlayerController *GetPlayerController() const;
     bool GetPlayerViewPoint(FVector &ViewLocation, FRotator &ViewRotation) const;
     FVector GetMuzzleWorldLocation() const;
 
@@ -67,8 +66,6 @@ class SHOOTTHEMAP_API ASTMBaseWeapon : public AActor
     void DecreaseAmmo();
     bool IsClipEmpty() const;
     void LogAmmo();
-
-    bool IsAmmoFull() const;
 
     UNiagaraComponent *SpawnMuzzleFX();
   private:

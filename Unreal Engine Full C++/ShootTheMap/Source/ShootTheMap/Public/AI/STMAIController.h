@@ -7,6 +7,7 @@
 #include "STMAIController.generated.h"
 
 class USTMAIPerceptionComponent;
+class USTMRestartComponent;
 
 /**
  *
@@ -25,6 +26,9 @@ class SHOOTTHEMAP_API ASTMAIController : public AAIController
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
     FName FocusOnKeyName = "EnemyActor";
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+    USTMRestartComponent *STMRestartComponent;
 
     virtual void OnPossess(APawn *InPawn) override;
 

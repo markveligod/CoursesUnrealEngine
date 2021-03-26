@@ -44,15 +44,6 @@ void ASTMBaseWeapon::MakeShot()
 
 }
 
-APlayerController *ASTMBaseWeapon::GetPlayerController() const
-{
-    const auto Player = Cast<ACharacter>(GetOwner());
-    if (!Player)
-        return nullptr;
-
-    return (Player->GetController<APlayerController>());
-}
-
 bool ASTMBaseWeapon::GetPlayerViewPoint(FVector &ViewLocation, FRotator &ViewRotation) const
 {
     const auto STMCharacter = Cast<ACharacter>(GetOwner());
@@ -61,7 +52,7 @@ bool ASTMBaseWeapon::GetPlayerViewPoint(FVector &ViewLocation, FRotator &ViewRot
 
     if (STMCharacter->IsPlayerControlled())
     {
-        const auto Controller = this->GetPlayerController();
+        const auto Controller = STMCharacter->GetController<APlayerController>();
         if (!Controller)
             return (false);
         Controller->GetPlayerViewPoint(ViewLocation, ViewRotation);
@@ -130,7 +121,7 @@ void ASTMBaseWeapon::ChangeClip()
         this->CurrentAmmo.Clips--;
     }
     this->CurrentAmmo.Bullet = this->DefaultAmmoData.Bullet;
-    UE_LOG(LogBaseWeapon, Warning, TEXT("---Change Clip---"));
+    //UE_LOG(LogBaseWeapon, Warning, TEXT("---Change Clip---"));
 }
 
 bool ASTMBaseWeapon::CanReload() const
@@ -155,7 +146,7 @@ bool ASTMBaseWeapon::TryToAddAmmo(int32 ClipsAmount)
 
     if (IsAmmoEmpty())
     {
-        UE_LOG(LogBaseWeapon, Display, TEXT("Actor: %s => Ammo is Empty"), *GetOwner()->GetName());
+        //UE_LOG(LogBaseWeapon, Display, TEXT("Actor: %s => Ammo is Empty"), *GetOwner()->GetName());
         this->CurrentAmmo.Clips = FMath::Clamp(ClipsAmount, 0, this->DefaultAmmoData.Clips + 1);
         this->OnClimpEmptySignature.Broadcast(this);
     }
@@ -165,19 +156,19 @@ bool ASTMBaseWeapon::TryToAddAmmo(int32 ClipsAmount)
         if (this->DefaultAmmoData.Clips - NextClips >= 0)
         {
             this->CurrentAmmo.Clips = NextClips;
-            UE_LOG(LogBaseWeapon, Display, TEXT("Actor: %s => (NextClips >= 0)"), *GetOwner()->GetName());
+            //UE_LOG(LogBaseWeapon, Display, TEXT("Actor: %s => (NextClips >= 0)"), *GetOwner()->GetName());
         }
         else
         {
             this->CurrentAmmo.Clips = this->DefaultAmmoData.Clips;
             this->CurrentAmmo.Bullet = this->DefaultAmmoData.Bullet;
-            UE_LOG(LogBaseWeapon, Display, TEXT("Actor: %s => Ammo is full"), *GetOwner()->GetName());
+            //UE_LOG(LogBaseWeapon, Display, TEXT("Actor: %s => Ammo is full"), *GetOwner()->GetName());
         }
     }
     else
     {
         this->CurrentAmmo.Bullet = this->DefaultAmmoData.Bullet;
-        UE_LOG(LogBaseWeapon, Display, TEXT("Actor: %s => Clips is full"), *GetOwner()->GetName());
+        //UE_LOG(LogBaseWeapon, Display, TEXT("Actor: %s => Clips is full"), *GetOwner()->GetName());
     }
     return (true);
 }
@@ -186,7 +177,7 @@ void ASTMBaseWeapon::LogAmmo()
 {
     FString AmmoInfo = "Ammo: " + FString::FromInt(this->CurrentAmmo.Bullet) + "/";
     AmmoInfo += (this->CurrentAmmo.bInfinity ? "Infinity" : FString::FromInt(this->CurrentAmmo.Clips));
-    UE_LOG(LogBaseWeapon, Warning, TEXT("%s"), *AmmoInfo);
+    //UE_LOG(LogBaseWeapon, Warning, TEXT("%s"), *AmmoInfo);
 
 }
 

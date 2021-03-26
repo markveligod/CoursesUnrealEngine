@@ -13,6 +13,6 @@ UCLASS()
 class SHOOTTHEMAP_API USTMAIPerceptionComponent : public UAIPerceptionComponent
 {
     GENERATED_BODY()
-    public:
+  public:
     AActor *GetClosesEnemy() const;
 };

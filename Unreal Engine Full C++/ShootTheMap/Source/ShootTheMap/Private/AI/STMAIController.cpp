@@ -5,11 +5,17 @@
 #include "AI/STMAICharacter.h"
 #include "AI/STMAIPerceptionComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "PlayerControllers/STMRestartComponent.h"
 
 ASTMAIController::ASTMAIController()
 {
     this->STMAIPerceptionComponent = CreateDefaultSubobject<USTMAIPerceptionComponent>("STMAIPerceptionComponent");
     SetPerceptionComponent(*STMAIPerceptionComponent);
+
+    this->STMRestartComponent = CreateDefaultSubobject<USTMRestartComponent>("Restart Component");
+
+
+    bWantsPlayerState = true;
 }
 
 void ASTMAIController::OnPossess(APawn *InPawn)

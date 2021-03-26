@@ -9,6 +9,7 @@
 #include "GameFramework/Pawn.h"
 #include "GameFramework/Controller.h"
 #include "Camera/CameraShake.h"
+#include "GameModes/STMGameModeBase.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogHealthComponent, All, All)
 
@@ -75,6 +76,7 @@ void UHealthComponent::OnTakeAnyDamageHandle(AActor *DamagedActor, float Damage,
 
     if (IsDead())
     {
+        this->Killed(InstigatedBy);
         OnDeath.Broadcast();
     }
     else if (this->bAutoHeal && GetWorld())
@@ -132,4 +134,16 @@ void UHealthComponent::PlayCameraShake()
 
     Controller->PlayerCameraManager->StartCameraShake(this->CameraShake);
 
+}
+
+void UHealthComponent::Killed(AController *Controller)
+{
+    const auto GameMode = Cast<ASTMGameModeBase>(GetWorld()->GetAuthGameMode());
+    if (!GameMode)
+        return;
+
+    const auto Player = Cast<APawn>(GetOwner());
+    const auto VictimController = Player ? Player->Controller : nullptr;
+
+    GameMode->Killed(Controller, VictimController);
 }

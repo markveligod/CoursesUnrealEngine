@@ -26,6 +26,7 @@ class SHOOTTHEMAP_API USTMWeaponComponent : public UActorComponent
     bool GetAmmoUIData(FAmmoData &AmmoData) const;
 
     bool TryToAddAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType, int32 ClipsAmount);
+    bool NeedAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType);
 
   protected:
     virtual void BeginPlay() override;

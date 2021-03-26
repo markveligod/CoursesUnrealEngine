@@ -170,6 +170,18 @@ bool USTMWeaponComponent::TryToAddAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType, i
     return false;
 }
 
+bool USTMWeaponComponent::NeedAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType)
+{
+    for (auto Weapon : this->WeaponsPtr)
+    {
+        if (Weapon && Weapon->IsA(WeaponType))
+        {
+            return (!Weapon->IsAmmoFull());
+        }
+    }
+    return false;
+}
+
 void USTMWeaponComponent::InitAnimations()
 {
     auto EquipFinishNotify = AnimUtils::FindNotifyByClass<USTMEquipFinishAnimNotify>(this->AnimationEquip);

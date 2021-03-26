@@ -47,6 +47,9 @@ class SHOOTTHEMAP_API ASTMBaseCharacter : public ACharacter
     UPROPERTY(EditAnywhere, Category = "Damage Edit")
     FVector2D LandeDamage = FVector2D(10.f, 100.f);
 
+    UPROPERTY(EditDefaultsOnly, Category = "Material")
+    FName MaterialColorName = "Paint Color";
+
     // Called when the game starts or when spawned
     virtual void BeginPlay() override;
     virtual void OnDeath();
@@ -65,6 +68,7 @@ class SHOOTTHEMAP_API ASTMBaseCharacter : public ACharacter
     UFUNCTION(BlueprintCallable, Category = "Movement")
     float GetMovementDirection() const;
 
+    void SetPlayerColor(const FLinearColor &Color);
   private:
     UCharacterMovementComponent *MovementComponent;
     bool bRunAction = false;

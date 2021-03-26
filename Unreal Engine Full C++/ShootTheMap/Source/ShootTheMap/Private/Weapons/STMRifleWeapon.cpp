@@ -77,8 +77,6 @@ void ASTMRifleWeapon::MakeHit(FHitResult &HitResult, FVector &TraceStart, FVecto
         this->MakeDamage(HitResult);
         this->WeaponVFXComponent->PlayImpact(HitResult);
     }
-    UE_LOG(LogTemp, Display, TEXT("Trace End %s"), *TraceEnd.ToString());
-    UE_LOG(LogTemp, Display, TEXT("TRace FX %s"), *TraceFXEnd.ToString());
     this->SpawnTraceFX(GetMuzzleWorldLocation(), TraceFXEnd);
 }
 
@@ -102,8 +100,6 @@ void ASTMRifleWeapon::SetMuzzleVisibility(bool Visible)
 
 void ASTMRifleWeapon::SpawnTraceFX(const FVector& TraceStart, const FVector& TraceEnd)
 {
-    UE_LOG(LogTemp, Display, TEXT("Trace End in function %s"), *TraceEnd.ToString());
-    UE_LOG(LogTemp, Display, TEXT("TRace Start Muzzle socket %s"), *TraceStart.ToString());
     const auto TraceFXComponent = UNiagaraFunctionLibrary::SpawnSystemAtLocation( //
         GetWorld(),                                                               //
         this->TraceFX,                                                            //
@@ -119,5 +115,11 @@ void ASTMRifleWeapon::MakeDamage(FHitResult &HitResult)
     const auto DamageActor = HitResult.GetActor();
     if (!DamageActor)
         return;
-    DamageActor->TakeDamage(this->DamageAmount, FDamageEvent{}, GetPlayerController(), this);
+    DamageActor->TakeDamage(this->DamageAmount, FDamageEvent{}, GetController(), this);
+}
+
+AController *ASTMRifleWeapon::GetController() const
+{
+    const auto Pawn = Cast<APawn>(GetOwner());
+    return (Pawn ? Pawn->GetController() : nullptr);
 }

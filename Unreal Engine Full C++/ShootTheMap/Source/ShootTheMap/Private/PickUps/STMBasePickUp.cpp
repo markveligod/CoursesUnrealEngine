@@ -46,13 +46,17 @@ void ASTMBasePickUp::Tick(float DeltaTime)
     AddActorLocalRotation(FRotator(0.f, this->RotationYaw, 0.f));
 }
 
+bool ASTMBasePickUp::CouldBeTaken() const
+{
+    return !GetWorld()->GetTimerManager().IsTimerActive(this->RespawnTimerHandle);
+}
+
 void ASTMBasePickUp::PickUpWasTaken()
 {
     this->CollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
     if (GetRootComponent())
         GetRootComponent()->SetVisibility(false, true);
-    FTimerHandle RespawnTimerHandle;
-    GetWorld()->GetTimerManager().SetTimer(RespawnTimerHandle, this, &ASTMBasePickUp::Respawn, this->RespawnTime);
+    GetWorld()->GetTimerManager().SetTimer(this->RespawnTimerHandle, this, &ASTMBasePickUp::Respawn, this->RespawnTime);
 }
 
 void ASTMBasePickUp::Respawn()

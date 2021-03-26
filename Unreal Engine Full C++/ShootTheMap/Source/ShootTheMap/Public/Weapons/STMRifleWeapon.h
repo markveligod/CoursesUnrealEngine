@@ -55,4 +55,5 @@ class SHOOTTHEMAP_API ASTMRifleWeapon : public ASTMBaseWeapon
     void InitMuzzleFX();
     void SetMuzzleVisibility(bool Visible);
     void SpawnTraceFX(const FVector& TraceStart, const FVector& TraceEnd);
+    AController *GetController() const;
 };

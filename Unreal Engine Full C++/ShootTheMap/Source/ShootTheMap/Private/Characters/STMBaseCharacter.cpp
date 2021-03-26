@@ -108,6 +108,15 @@ float ASTMBaseCharacter::GetMovementDirection() const
     return (CrossProduct.IsZero() ? Degrees : FMath::RadiansToDegrees(AngleBetween) * FMath::Sign(CrossProduct.Z));
 }
 
+void ASTMBaseCharacter::SetPlayerColor(const FLinearColor &Color)
+{
+    const auto MaterialInstance = GetMesh()->CreateAndSetMaterialInstanceDynamic(0);
+    if (!MaterialInstance)
+        return;
+
+    MaterialInstance->SetVectorParameterValue(this->MaterialColorName, Color);
+}
+
 void ASTMBaseCharacter::MoveForward(float amount)
 {
     this->bIsMovingFrw = amount > 0.0f;
