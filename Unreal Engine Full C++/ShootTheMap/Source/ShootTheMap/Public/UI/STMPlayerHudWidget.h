@@ -30,16 +30,14 @@ class SHOOTTHEMAP_API USTMPlayerHudWidget : public UUserWidget
 
     UFUNCTION(BlueprintCallable, Category = "UI")
     bool IsPlayerSpectating() const;
-    
+
     UFUNCTION(BlueprintImplementableEvent, Category = "UI")
     void OnTakeDamage();
 
-    virtual bool Initialize() override;
-
+  protected:
+    virtual void NativeOnInitialized() override;
 
   private:
     void OnHealthChanched(float Health, float HealthDelta);
     void OnNewPawn(APawn *NewPawn);
 };
-
-

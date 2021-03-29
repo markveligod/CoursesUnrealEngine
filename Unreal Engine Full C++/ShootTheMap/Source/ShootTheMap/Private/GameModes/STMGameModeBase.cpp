@@ -89,6 +89,15 @@ bool ASTMGameModeBase::SetPause(APlayerController *PC, FCanUnpause CanUnpauseDel
     return (TempResPause);
 }
 
+bool ASTMGameModeBase::ClearPause()
+{
+    const auto TempResPause = Super::ClearPause();
+
+    if (TempResPause)
+        this->SetMatchState(ESTMMatchState::InProgress);
+    return (TempResPause);
+}
+
 void ASTMGameModeBase::SpawnBots()
 {
     if (!GetWorld())
@@ -166,6 +175,7 @@ void ASTMGameModeBase::CreateTeamsInfo()
 
         PlayerState->SetTeamID(TeamID);
         PlayerState->SetColor(this->DetermineByTeamID(TeamID));
+        PlayerState->SetPlayerName(Controller->IsPlayerController() ? "Player" : "Bot");
         this->SetPlayerColor(Controller);
 
         TeamID = TeamID == 1 ? 2 : 1;

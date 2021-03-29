@@ -41,7 +41,7 @@ class SHOOTTHEMAP_API ASTMGameModeBase : public AGameModeBase
     FGameData GameData;
 
     virtual bool SetPause(APlayerController *PC, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
-
+    virtual bool ClearPause() override;
   private:
     ESTMMatchState MatchState = ESTMMatchState::WaitingToStart;
     int32 CurrentRound = 1;

@@ -41,14 +41,14 @@ bool USTMPlayerHudWidget::IsPlayerSpectating() const
     return (Contoller && Contoller->GetStateName() == NAME_Spectating);
 }
 
-bool USTMPlayerHudWidget::Initialize()
+void USTMPlayerHudWidget::NativeOnInitialized()
 {
+    Super::NativeOnInitialized();
     if (GetOwningPlayer())
     {
         GetOwningPlayer()->GetOnNewPawnNotifier().AddUObject(this, &USTMPlayerHudWidget::OnNewPawn);
         this->OnNewPawn(GetOwningPlayerPawn());
     }
-    return (Super::Initialize());
 }
 
 void USTMPlayerHudWidget::OnHealthChanched(float Health, float HealthDelta)

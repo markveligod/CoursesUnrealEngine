@@ -19,6 +19,8 @@ void ASTMGameHUD::BeginPlay()
 
     this->GameWidgets.Add(ESTMMatchState::InProgress, CreateWidget<UUserWidget>(GetWorld(), this->PlayerHudWidgetClass));
     this->GameWidgets.Add(ESTMMatchState::Pause, CreateWidget<UUserWidget>(GetWorld(), this->PauseHudWidgetClass));
+    this->GameWidgets.Add(ESTMMatchState::GameOver, CreateWidget<UUserWidget>(GetWorld(), this->GameOverHudWidgetClass));
+    
 
     for (auto TempGameWidgetPair : this->GameWidgets)
     {

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "STMCoreType.h"
 #include "STMPlayerController.generated.h"
 
 class USTMRestartComponent;
@@ -22,8 +23,11 @@ class SHOOTTHEMAP_API ASTMPlayerController : public APlayerController
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Edit")
     USTMRestartComponent *STMRestartComponent;
 
+    virtual void BeginPlay() override;
+    virtual void OnPossess(APawn *InPawn) override;
     virtual void SetupInputComponent();
 
   private:
     void OnPauseGame();
+    void OnMatchStateChanged(ESTMMatchState State);
 };

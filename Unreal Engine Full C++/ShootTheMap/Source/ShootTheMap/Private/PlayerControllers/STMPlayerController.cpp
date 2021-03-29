@@ -9,6 +9,39 @@ ASTMPlayerController::ASTMPlayerController()
     this->STMRestartComponent = CreateDefaultSubobject<USTMRestartComponent>("Restart Component");
 }
 
+void ASTMPlayerController::BeginPlay()
+{
+    Super::BeginPlay();
+    if (GetWorld())
+    {
+        const auto GameMode = Cast<ASTMGameModeBase>(GetWorld()->GetAuthGameMode());
+        if (GameMode)
+        {
+            GameMode->OnMatchStateChanged.AddUObject(this, &ASTMPlayerController::OnMatchStateChanged);
+        }
+    }
+}
+
+void ASTMPlayerController::OnPossess(APawn *InPawn)
+{
+    Super::OnPossess(InPawn);
+    this->OnNewPawn.Broadcast(InPawn);
+}
+
+void ASTMPlayerController::OnMatchStateChanged(ESTMMatchState State)
+{
+    if (State == ESTMMatchState::InProgress)
+    {
+        SetInputMode(FInputModeGameOnly());
+        bShowMouseCursor = false;
+    }
+    else
+    {
+        SetInputMode(FInputModeGameAndUI());
+        bShowMouseCursor = true;
+    }
+}
+
 void ASTMPlayerController::SetupInputComponent()
 {
     Super::SetupInputComponent();

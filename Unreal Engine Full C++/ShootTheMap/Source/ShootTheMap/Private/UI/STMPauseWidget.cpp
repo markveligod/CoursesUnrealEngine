@@ -5,18 +5,20 @@
 #include "GameModes/STMGameModeBase.h"
 #include "Components/Button.h"
 
-bool USTMPauseWidget::Initialize()
+void USTMPauseWidget::NativeOnInitialized()
 {
-    const auto InitStatus = Super::Initialize();
+    Super::NativeOnInitialized();
 
     if (this->ClearPauseButton)
     {
         this->ClearPauseButton->OnClicked.AddDynamic(this, &USTMPauseWidget::OnClearPause);
     }
-    return (InitStatus);
 }
 
 void USTMPauseWidget::OnClearPause()
 {
+    if (!GetWorld() || !GetWorld()->GetAuthGameMode())
+        return;
 
+    GetWorld()->GetAuthGameMode()->ClearPause();
 }
