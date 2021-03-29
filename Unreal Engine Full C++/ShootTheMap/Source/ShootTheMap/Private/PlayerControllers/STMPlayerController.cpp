@@ -23,5 +23,5 @@ void ASTMPlayerController::OnPauseGame()
     if (!GetWorld() || !GetWorld()->GetAuthGameMode())
         return;
 
-
+    GetWorld()->GetAuthGameMode()->SetPause(this);
 }

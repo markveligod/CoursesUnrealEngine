@@ -79,6 +79,16 @@ void ASTMGameModeBase::RespawnRequest(AController *Controller)
     ResetOnePlayer(Controller);
 }
 
+bool ASTMGameModeBase::SetPause(APlayerController *PC, FCanUnpause CanUnpauseDelegate)
+{
+    const auto TempResPause = Super::SetPause(PC, CanUnpauseDelegate);
+
+    if (TempResPause)
+        this->SetMatchState(ESTMMatchState::Pause);
+
+    return (TempResPause);
+}
+
 void ASTMGameModeBase::SpawnBots()
 {
     if (!GetWorld())

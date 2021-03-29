@@ -16,10 +16,17 @@ void ASTMGameHUD::DrawHUD()
 void ASTMGameHUD::BeginPlay()
 {
     Super::BeginPlay();
-    auto PlayerHudWidget = CreateWidget<UUserWidget>(GetWorld(), this->PlayerHudWidgetClass);
-    if (PlayerHudWidget)
+
+    this->GameWidgets.Add(ESTMMatchState::InProgress, CreateWidget<UUserWidget>(GetWorld(), this->PlayerHudWidgetClass));
+    this->GameWidgets.Add(ESTMMatchState::Pause, CreateWidget<UUserWidget>(GetWorld(), this->PauseHudWidgetClass));
+
+    for (auto TempGameWidgetPair : this->GameWidgets)
     {
-        PlayerHudWidget->AddToViewport();
+        const auto TempGameValueWidget = TempGameWidgetPair.Value;
+        if (!TempGameValueWidget) continue;
+
+        TempGameValueWidget->AddToViewport();
+        TempGameValueWidget->SetVisibility(ESlateVisibility::Hidden);
     }
 
     if (GetWorld())
@@ -45,5 +52,20 @@ void ASTMGameHUD::DrawCrossHair()
 
 void ASTMGameHUD::OnMatchChanged(ESTMMatchState NewState)
 {
+    if (this->CurrentWidget)
+    {
+        this->CurrentWidget->SetVisibility(ESlateVisibility::Hidden);
+    }
+
+    if (this->GameWidgets.Contains(NewState))
+    {
+        this->CurrentWidget = this->GameWidgets[NewState];
+    }
+
+    if (this->CurrentWidget)
+    {
+        this->CurrentWidget->SetVisibility(ESlateVisibility::Visible);
+    }
+
     UE_LOG(LogSTMGameHUD, Display, TEXT("Match State: %s"), *UEnum::GetValueAsString(NewState))
 }

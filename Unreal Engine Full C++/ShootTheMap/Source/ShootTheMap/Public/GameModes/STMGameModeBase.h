@@ -40,6 +40,8 @@ class SHOOTTHEMAP_API ASTMGameModeBase : public AGameModeBase
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game Stats")
     FGameData GameData;
 
+    virtual bool SetPause(APlayerController *PC, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
+
   private:
     ESTMMatchState MatchState = ESTMMatchState::WaitingToStart;
     int32 CurrentRound = 1;

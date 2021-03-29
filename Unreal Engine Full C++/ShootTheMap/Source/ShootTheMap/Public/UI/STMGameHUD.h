@@ -21,9 +21,18 @@ class SHOOTTHEMAP_API ASTMGameHUD : public AHUD
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     TSubclassOf<UUserWidget> PlayerHudWidgetClass;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
+    TSubclassOf<UUserWidget> PauseHudWidgetClass;
+
     virtual void BeginPlay() override;
 
   private:
+    UPROPERTY()
+    TMap<ESTMMatchState, UUserWidget *> GameWidgets;
+
+    UPROPERTY()
+    UUserWidget *CurrentWidget;
+
     void DrawCrossHair();
     void OnMatchChanged(ESTMMatchState NewState);
 };
