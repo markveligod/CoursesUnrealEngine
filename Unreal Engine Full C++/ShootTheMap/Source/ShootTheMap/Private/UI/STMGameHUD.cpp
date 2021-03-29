@@ -3,6 +3,9 @@
 #include "UI/STMGameHUD.h"
 #include "Engine/Canvas.h"
 #include "Blueprint/UserWidget.h"
+#include "GameModes/STMGameModeBase.h"
+
+DEFINE_LOG_CATEGORY_STATIC(LogSTMGameHUD, All, All);
 
 void ASTMGameHUD::DrawHUD()
 {
@@ -18,6 +21,15 @@ void ASTMGameHUD::BeginPlay()
     {
         PlayerHudWidget->AddToViewport();
     }
+
+    if (GetWorld())
+    {
+        const auto GameMode = Cast<ASTMGameModeBase>(GetWorld()->GetAuthGameMode());
+        if (GameMode)
+        {
+            GameMode->OnMatchStateChanged.AddUObject(this, &ASTMGameHUD::OnMatchChanged);
+        }
+    }
 }
 
 void ASTMGameHUD::DrawCrossHair()
@@ -29,4 +41,9 @@ void ASTMGameHUD::DrawCrossHair()
     const FLinearColor LineColor = FLinearColor::Green;
     DrawLine(Center.Min - HalfLineSize, Center.Max, Center.Min + HalfLineSize, Center.Max, LineColor, LineThinkness);
     DrawLine(Center.Min, Center.Max - HalfLineSize, Center.Min, Center.Max + HalfLineSize, LineColor, LineThinkness);
+}
+
+void ASTMGameHUD::OnMatchChanged(ESTMMatchState NewState)
+{
+    UE_LOG(LogSTMGameHUD, Display, TEXT("Match State: %s"), *UEnum::GetValueAsString(NewState))
 }

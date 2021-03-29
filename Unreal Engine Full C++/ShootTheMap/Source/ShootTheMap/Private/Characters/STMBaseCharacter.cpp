@@ -1,17 +1,12 @@
 // ShootTheMap
 
 #include "Characters/STMBaseCharacter.h"
-#include "Camera/CameraComponent.h"
 #include "Characters/Components/HealthComponent.h"
 #include "Characters/Components/STMCharacterMovementComponent.h"
-#include "Components/InputComponent.h"
-#include "Components/TextRenderComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
-#include "GameFramework/SpringArmComponent.h"
 #include "Weapons/STMWeaponComponent.h"
-
 
 DEFINE_LOG_CATEGORY_STATIC(LogCharacter, All, All)
 
@@ -24,22 +19,8 @@ ASTMBaseCharacter::ASTMBaseCharacter(const FObjectInitializer &ObjInit)
     // it.
     PrimaryActorTick.bCanEverTick = true;
 
-    // Create Spring Arm Component
-    this->SpringArm = CreateDefaultSubobject<USpringArmComponent>("Spring Arm");
-    this->SpringArm->SetupAttachment(GetRootComponent());
-    this->SpringArm->bUsePawnControlRotation = true;
-    this->SpringArm->SocketOffset = FVector(0.f, 100.f, 80.f);
-
-    // Create Camera Component
-    this->CameraComponent = CreateDefaultSubobject<UCameraComponent>("Camera Component");
-    this->CameraComponent->SetupAttachment(this->SpringArm);
-
     // Create Health component
     this->Health = CreateDefaultSubobject<UHealthComponent>("Health Component");
-
-    this->HealthTextComp = CreateDefaultSubobject<UTextRenderComponent>("Text Health Component");
-    this->HealthTextComp->SetupAttachment(GetRootComponent());
-    this->HealthTextComp->bOwnerNoSee = true;
 
     //Create Weapon component
     this->WeaponComp = CreateDefaultSubobject<USTMWeaponComponent>("Weapon Component");
@@ -50,7 +31,6 @@ void ASTMBaseCharacter::BeginPlay()
 {
     Super::BeginPlay();
     check(this->Health);
-    check(this->HealthTextComp);
     check(GetCharacterMovement());
     //check(this->WeaponComp);
     check(GetMesh());
@@ -71,30 +51,9 @@ void ASTMBaseCharacter::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
 }
 
-// Called to bind functionality to input
-void ASTMBaseCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
-{
-    Super::SetupPlayerInputComponent(PlayerInputComponent);
-    if (PlayerInputComponent)
-    {
-        PlayerInputComponent->BindAxis("MoveForward", this, &ASTMBaseCharacter::MoveForward);
-        PlayerInputComponent->BindAxis("MoveRight", this, &ASTMBaseCharacter::MoveRight);
-        PlayerInputComponent->BindAxis("LookUp", this, &ASTMBaseCharacter::AddControllerPitchInput);
-        PlayerInputComponent->BindAxis("TurnAround", this, &ASTMBaseCharacter::AddControllerYawInput);
-        PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ASTMBaseCharacter::Jump);
-        PlayerInputComponent->BindAction("Run", IE_Pressed, this, &ASTMBaseCharacter::StartRun);
-        PlayerInputComponent->BindAction("Run", IE_Released, this, &ASTMBaseCharacter::StopRun);
-        PlayerInputComponent->BindAction("Fire", IE_Pressed, this->WeaponComp, &USTMWeaponComponent::StartFire);
-        PlayerInputComponent->BindAction("Fire", IE_Released, this->WeaponComp, &USTMWeaponComponent::StopFire);
-        PlayerInputComponent->BindAction("NextWeapon", IE_Released, this->WeaponComp, &USTMWeaponComponent::NextWeapon);
-        PlayerInputComponent->BindAction("Reload", IE_Pressed, this->WeaponComp, &USTMWeaponComponent::Reload);
-
-    }
-}
-
 bool ASTMBaseCharacter::IsRunning() const
 {
-    return (this->bIsMovingFrw && this->bRunAction && !GetVelocity().IsZero());
+    return (false);
 }
 
 float ASTMBaseCharacter::GetMovementDirection() const
@@ -117,30 +76,6 @@ void ASTMBaseCharacter::SetPlayerColor(const FLinearColor &Color)
     MaterialInstance->SetVectorParameterValue(this->MaterialColorName, Color);
 }
 
-void ASTMBaseCharacter::MoveForward(float amount)
-{
-    this->bIsMovingFrw = amount > 0.0f;
-    if (amount == 0.0f)
-        return;
-    AddMovementInput(GetActorForwardVector(), amount);
-}
-
-void ASTMBaseCharacter::MoveRight(float amount)
-{
-    if (amount == 0.0f)
-        return;
-    AddMovementInput(GetActorRightVector(), amount);
-}
-
-void ASTMBaseCharacter::StartRun()
-{
-    this->bRunAction = true;
-}
-
-void ASTMBaseCharacter::StopRun()
-{
-    this->bRunAction = false;
-}
 
 void ASTMBaseCharacter::OnDeath()
 {
@@ -149,10 +84,6 @@ void ASTMBaseCharacter::OnDeath()
     GetCharacterMovement()->DisableMovement();
     GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
     SetLifeSpan(5.f);
-    if (Controller)
-    {
-        Controller->ChangeState(NAME_Spectating);
-    }
     this->WeaponComp->StopFire();
     GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
     GetMesh()->SetSimulatePhysics(true);
@@ -160,7 +91,6 @@ void ASTMBaseCharacter::OnDeath()
 
 void ASTMBaseCharacter::OnHealthChanged(float NewHealth, float HealthDelta)
 {
-    this->HealthTextComp->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), NewHealth)));
 }
 
 void ASTMBaseCharacter::OnGroundLanded(const FHitResult &Hit)

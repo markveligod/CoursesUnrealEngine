@@ -39,4 +39,7 @@ class SHOOTTHEMAP_API USTMPlayerHudWidget : public UUserWidget
 
   private:
     void OnHealthChanched(float Health, float HealthDelta);
+    void OnNewPawn(APawn *NewPawn);
 };
+
+

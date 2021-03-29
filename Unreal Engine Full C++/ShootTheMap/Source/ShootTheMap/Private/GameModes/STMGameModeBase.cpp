@@ -8,6 +8,8 @@
 #include "Characters/STMPlayerState.h"
 #include "STMUtils.h"
 #include "PlayerControllers/STMRestartComponent.h"
+#include "EngineUtils.h"
+#include "STMWeaponComponent.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogSTMGameModeBase, All, All);
 
@@ -28,6 +30,7 @@ void ASTMGameModeBase::StartPlay()
     this->CreateTeamsInfo();
     this->CurrentRound = 1;
     this->StartRound();
+    this->SetMatchState(ESTMMatchState::InProgress);
 }
 
 UClass * ASTMGameModeBase::GetDefaultPawnClassForController_Implementation(AController *InController)
@@ -112,8 +115,8 @@ void ASTMGameModeBase::TimerUpdate()
         }
         else
         {
-            UE_LOG(LogSTMGameModeBase, Display, TEXT("===========GAME OVER==========="));
-            this->LogPlayerInfo();
+            this->GameOver();
+            
         }
     }
 }
@@ -211,4 +214,33 @@ void ASTMGameModeBase::StartRespawn(AController *Controller)
         return;
 
     RespawnComponent->Respawn(GameData.RespawnTime);
+}
+
+void ASTMGameModeBase::GameOver()
+{
+    UE_LOG(LogSTMGameModeBase, Display, TEXT("===========GAME OVER==========="));
+    this->LogPlayerInfo();
+
+    for (auto Pawn: TActorRange<APawn>(GetWorld()))
+    {
+        if (Pawn)
+        {
+            Pawn->TurnOff();
+            Pawn->DisableInput(nullptr);
+            const auto WeaponComp = STMUtils::GetComponent<USTMWeaponComponent>(Pawn);
+            if (WeaponComp)
+            {
+                WeaponComp->StopFire();
+            }
+        }
+    }
+    this->SetMatchState(ESTMMatchState::GameOver);
+}
+
+void ASTMGameModeBase::SetMatchState(ESTMMatchState NewMatchState)
+{
+    if (this->MatchState == NewMatchState) return;
+
+    this->MatchState = NewMatchState;
+    this->OnMatchStateChanged.Broadcast(this->MatchState);
 }

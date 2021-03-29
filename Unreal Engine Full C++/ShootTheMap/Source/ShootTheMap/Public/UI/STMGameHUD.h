@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
+#include "STMCoreType.h"
 #include "STMGameHUD.generated.h"
 
 /**
@@ -24,4 +25,5 @@ class SHOOTTHEMAP_API ASTMGameHUD : public AHUD
 
   private:
     void DrawCrossHair();
+    void OnMatchChanged(ESTMMatchState NewState);
 };
