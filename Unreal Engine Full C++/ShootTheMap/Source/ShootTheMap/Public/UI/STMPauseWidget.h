@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Blueprint/UserWidget.h"
+#include "UI/STMBaseWidget.h"
 #include "CoreMinimal.h"
 #include "STMPauseWidget.generated.h"
 
@@ -12,7 +12,7 @@ class UButton;
  *
  */
 UCLASS()
-class SHOOTTHEMAP_API USTMPauseWidget : public UUserWidget
+class SHOOTTHEMAP_API USTMPauseWidget : public USTMBaseWidget
 {
     GENERATED_BODY()
 

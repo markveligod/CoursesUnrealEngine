@@ -2,17 +2,18 @@
 
 
 #include "Menu/STMMenuHUD.h"
-#include "Blueprint/UserWidget.h"
+#include "UI/STMBaseWidget.h"
 
 void ASTMMenuHUD::BeginPlay()
 {
     Super::BeginPlay();
     if (this->MenuWidgetClass)
     {
-        const auto MenuWidget = CreateWidget<UUserWidget>(GetWorld(), MenuWidgetClass);
+        const auto MenuWidget = CreateWidget<USTMBaseWidget>(GetWorld(), MenuWidgetClass);
         if (MenuWidget)
         {
             MenuWidget->AddToViewport();
+            MenuWidget->Show();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 #include "UI/STMGameHUD.h"
 #include "Engine/Canvas.h"
-#include "Blueprint/UserWidget.h"
+#include "UI/STMBaseWidget.h"
 #include "GameModes/STMGameModeBase.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogSTMGameHUD, All, All);
@@ -17,9 +17,11 @@ void ASTMGameHUD::BeginPlay()
 {
     Super::BeginPlay();
 
-    this->GameWidgets.Add(ESTMMatchState::InProgress, CreateWidget<UUserWidget>(GetWorld(), this->PlayerHudWidgetClass));
-    this->GameWidgets.Add(ESTMMatchState::Pause, CreateWidget<UUserWidget>(GetWorld(), this->PauseHudWidgetClass));
-    this->GameWidgets.Add(ESTMMatchState::GameOver, CreateWidget<UUserWidget>(GetWorld(), this->GameOverHudWidgetClass));
+    this->GameWidgets.Add(ESTMMatchState::InProgress,
+                          CreateWidget<USTMBaseWidget>(GetWorld(), this->PlayerHudWidgetClass));
+    this->GameWidgets.Add(ESTMMatchState::Pause, CreateWidget<USTMBaseWidget>(GetWorld(), this->PauseHudWidgetClass));
+    this->GameWidgets.Add(ESTMMatchState::GameOver,
+                          CreateWidget<USTMBaseWidget>(GetWorld(), this->GameOverHudWidgetClass));
     
 
     for (auto TempGameWidgetPair : this->GameWidgets)
@@ -67,6 +69,7 @@ void ASTMGameHUD::OnMatchChanged(ESTMMatchState NewState)
     if (this->CurrentWidget)
     {
         this->CurrentWidget->SetVisibility(ESlateVisibility::Visible);
+        this->CurrentWidget->Show();
     }
 
     UE_LOG(LogSTMGameHUD, Display, TEXT("Match State: %s"), *UEnum::GetValueAsString(NewState))

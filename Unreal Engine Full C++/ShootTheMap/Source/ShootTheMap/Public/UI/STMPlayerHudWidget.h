@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Blueprint/UserWidget.h"
+#include "UI/STMBaseWidget.h"
 #include "CoreMinimal.h"
 #include "STMCoreType.h"
 #include "STMPlayerHudWidget.generated.h"
@@ -12,7 +12,7 @@
  */
 
 UCLASS()
-class SHOOTTHEMAP_API USTMPlayerHudWidget : public UUserWidget
+class SHOOTTHEMAP_API USTMPlayerHudWidget : public USTMBaseWidget
 {
     GENERATED_BODY()
   public:
@@ -35,6 +35,8 @@ class SHOOTTHEMAP_API USTMPlayerHudWidget : public UUserWidget
     void OnTakeDamage();
 
   protected:
+    UPROPERTY(meta = (BindWidgetAnim), Transient)
+    UWidgetAnimation *DamageAnim;
     virtual void NativeOnInitialized() override;
 
   private:

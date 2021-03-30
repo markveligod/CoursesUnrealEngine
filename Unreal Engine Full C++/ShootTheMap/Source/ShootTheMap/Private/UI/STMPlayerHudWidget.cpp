@@ -54,7 +54,13 @@ void USTMPlayerHudWidget::NativeOnInitialized()
 void USTMPlayerHudWidget::OnHealthChanched(float Health, float HealthDelta)
 {
     if (HealthDelta < 0)
+    {
         this->OnTakeDamage();
+        if (!IsAnimationPlaying(this->DamageAnim))
+        {
+            PlayAnimation(this->DamageAnim);
+        }
+    }
 }
 
 void USTMPlayerHudWidget::OnNewPawn(APawn *NewPawn)

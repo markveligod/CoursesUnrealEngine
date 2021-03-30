@@ -7,6 +7,7 @@
 #include "STMCoreType.h"
 #include "STMGameHUD.generated.h"
 
+class USTMBaseWidget;
 /**
  *
  */
@@ -31,10 +32,10 @@ class SHOOTTHEMAP_API ASTMGameHUD : public AHUD
 
   private:
     UPROPERTY()
-    TMap<ESTMMatchState, UUserWidget *> GameWidgets;
+    TMap<ESTMMatchState, USTMBaseWidget *> GameWidgets;
 
     UPROPERTY()
-    UUserWidget *CurrentWidget;
+    USTMBaseWidget *CurrentWidget;
 
     void DrawCrossHair();
     void OnMatchChanged(ESTMMatchState NewState);
