@@ -9,6 +9,7 @@
 class UNiagaraComponent;
 class USTMWeaponVFXComponent;
 class UNiagaraSystem;
+class UAudioComponent;
 
 /**
  *
@@ -52,8 +53,11 @@ class SHOOTTHEMAP_API ASTMRifleWeapon : public ASTMBaseWeapon
     UNiagaraComponent *MuzzleFXComponent;
     FTimerHandle ShotTimerHandle;
 
-    void InitMuzzleFX();
-    void SetMuzzleVisibility(bool Visible);
+    UPROPERTY()
+    UAudioComponent *AudioComponent;
+
+    void InitFX();
+    void SetFXActive(bool IsActive);
     void SpawnTraceFX(const FVector& TraceStart, const FVector& TraceEnd);
     AController *GetController() const;
 };

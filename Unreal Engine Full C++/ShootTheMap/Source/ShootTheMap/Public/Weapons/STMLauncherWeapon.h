@@ -11,6 +11,7 @@
  */
 
 class ASTMProjectile;
+class USoundCue;
 
 UCLASS()
 class SHOOTTHEMAP_API ASTMLauncherWeapon : public ASTMBaseWeapon
@@ -23,6 +24,8 @@ class SHOOTTHEMAP_API ASTMLauncherWeapon : public ASTMBaseWeapon
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     TSubclassOf<ASTMProjectile> ProjectileClass;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound Editor")
+    USoundCue *NoAmmoSound;
 
     virtual void MakeShot() override;
 };

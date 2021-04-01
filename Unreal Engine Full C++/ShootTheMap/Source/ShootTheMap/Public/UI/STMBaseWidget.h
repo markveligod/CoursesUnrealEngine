@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "STMBaseWidget.generated.h"
 
+class USoundCue;
 /**
  *
  */
@@ -18,6 +19,9 @@ class SHOOTTHEMAP_API USTMBaseWidget : public UUserWidget
     void Show();
 
   protected:
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound Editor")
+    USoundCue *OpenWidgetSound;
+
     UPROPERTY(Transient, meta = (BindWidgetAnim))
     UWidgetAnimation *ShowAnimation;
 };

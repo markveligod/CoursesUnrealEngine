@@ -10,6 +10,7 @@
 class UCharacterMovementComponent;
 class UHealthComponent;
 class USTMWeaponComponent;
+class USoundCue;
 
 UCLASS()
 class SHOOTTHEMAP_API ASTMBaseCharacter : public ACharacter
@@ -39,6 +40,9 @@ class SHOOTTHEMAP_API ASTMBaseCharacter : public ACharacter
 
     UPROPERTY(EditDefaultsOnly, Category = "Material")
     FName MaterialColorName = "Paint Color";
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound Editor")
+    USoundCue *DeathSound;
 
     // Called when the game starts or when spawned
     virtual void BeginPlay() override;

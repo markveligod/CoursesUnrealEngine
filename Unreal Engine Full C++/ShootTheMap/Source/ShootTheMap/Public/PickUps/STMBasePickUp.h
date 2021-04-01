@@ -7,6 +7,7 @@
 #include "STMBasePickUp.generated.h"
 
 class USphereComponent;
+class USoundCue;
 
 UCLASS()
 class SHOOTTHEMAP_API ASTMBasePickUp : public AActor
@@ -24,6 +25,9 @@ class SHOOTTHEMAP_API ASTMBasePickUp : public AActor
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUp")
     float RespawnTime = 5.f;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUp")
+    USoundCue *PickUpSound;
 
     virtual void BeginPlay() override;
     virtual void NotifyActorBeginOverlap(AActor *OtherActor) override;

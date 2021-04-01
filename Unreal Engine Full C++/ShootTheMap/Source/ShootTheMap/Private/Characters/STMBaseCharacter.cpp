@@ -7,6 +7,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "Weapons/STMWeaponComponent.h"
+#include "Sound/SoundCue.h"
+#include "Kismet/GameplayStatics.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogCharacter, All, All)
 
@@ -87,6 +89,8 @@ void ASTMBaseCharacter::OnDeath()
     this->WeaponComp->StopFire();
     GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
     GetMesh()->SetSimulatePhysics(true);
+    UGameplayStatics::PlaySoundAtLocation(GetWorld(), this->DeathSound, GetActorLocation());
+
 }
 
 void ASTMBaseCharacter::OnHealthChanged(float NewHealth, float HealthDelta)

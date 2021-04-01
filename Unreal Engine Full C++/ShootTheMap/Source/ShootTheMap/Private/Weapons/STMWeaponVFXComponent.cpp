@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
+#include "Sound/SoundCue.h"
 
 // Sets default values
 USTMWeaponVFXComponent::USTMWeaponVFXComponent()
@@ -38,4 +39,7 @@ void USTMWeaponVFXComponent::PlayImpact(const FHitResult &Hit)
     {
         DecalComp->SetFadeOut(ImpactData.DecalData.LifeTime, ImpactData.DecalData.FadeOutTime);
     }
+
+    //sound
+    UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactData.ImpactSound, Hit.ImpactPoint);
 }

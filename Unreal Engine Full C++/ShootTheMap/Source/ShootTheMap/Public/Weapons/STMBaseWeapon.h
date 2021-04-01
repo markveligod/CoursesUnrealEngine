@@ -10,6 +10,7 @@
 class UNiagaraSystem;
 class UNiagaraComponent;
 class USkeletalMeshComponent;
+class USoundCue;
 
 UCLASS()
 class SHOOTTHEMAP_API ASTMBaseWeapon : public AActor
@@ -54,6 +55,9 @@ class SHOOTTHEMAP_API ASTMBaseWeapon : public AActor
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Edit VFX")
     UNiagaraSystem *MuzzleFX;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound Editor")
+    USoundCue *FireSound;
 
     virtual void BeginPlay() override;
 

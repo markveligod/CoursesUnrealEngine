@@ -12,3 +12,10 @@ FName USTMGameInstance::GetMenuLevelName() const
 {
     return (this->MenuLevelName);
 }
+
+USoundClass* USTMGameInstance::GetSoundMaterClass() const
+{
+    return (this->SoundMasterClass);
+}
+
+

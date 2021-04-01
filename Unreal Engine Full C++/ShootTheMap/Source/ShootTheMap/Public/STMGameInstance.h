@@ -6,6 +6,7 @@
 #include "Engine/GameInstance.h"
 #include "STMGameInstance.generated.h"
 
+class USoundClass;
 /**
  *
  */
@@ -17,6 +18,7 @@ class SHOOTTHEMAP_API USTMGameInstance : public UGameInstance
   public:
     FName GetStartUpLevelName() const;
     FName GetMenuLevelName() const;
+    USoundClass* GetSoundMaterClass() const;
 
   protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game Level")
@@ -24,4 +26,7 @@ class SHOOTTHEMAP_API USTMGameInstance : public UGameInstance
 
     UPROPERTY(EditDefaultsOnly, Category = "Game Level")
     FName MenuLevelName = NAME_None;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Sound Master")
+    USoundClass *SoundMasterClass;
 };
