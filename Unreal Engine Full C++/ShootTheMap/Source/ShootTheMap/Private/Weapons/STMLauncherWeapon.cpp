@@ -5,9 +5,15 @@
 #include "Weapons/STMProjectile.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
+#include "Characters/STMPlayerCharacter.h"
 
 void ASTMLauncherWeapon::StartFire()
 {
+    const auto StmCharacter = Cast<ASTMPlayerCharacter>(GetOwner());
+    if (StmCharacter && StmCharacter->IsRunning())
+    {
+        return;
+    }
     this->MakeShot();
 }
 

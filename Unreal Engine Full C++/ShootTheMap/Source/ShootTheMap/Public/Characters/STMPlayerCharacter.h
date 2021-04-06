@@ -44,6 +44,7 @@ class SHOOTTHEMAP_API ASTMPlayerCharacter : public ASTMBaseCharacter
     UCharacterMovementComponent *MovementComponent;
     bool bRunAction = false;
     bool bIsMovingFrw = false;
+    
 
     // Function
     void MoveForward(float amount);

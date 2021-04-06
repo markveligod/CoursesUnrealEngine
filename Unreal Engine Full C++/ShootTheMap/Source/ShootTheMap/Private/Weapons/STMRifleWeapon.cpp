@@ -8,6 +8,7 @@
 #include "Components/AudioComponent.h"
 #include "Sound/SoundCue.h"
 #include "Kismet/GameplayStatics.h"
+#include "Characters/STMPlayerCharacter.h"
 
 ASTMRifleWeapon::ASTMRifleWeapon()
 {
@@ -22,6 +23,11 @@ void ASTMRifleWeapon::BeginPlay()
 
 void ASTMRifleWeapon::StartFire()
 {
+    const auto StmCharacter = Cast<ASTMPlayerCharacter>(GetOwner());
+    if (StmCharacter && StmCharacter->IsRunning())
+    {
+        return;
+    }
     this->InitFX();
     GetWorldTimerManager().SetTimer(this->ShotTimerHandle, this, &ASTMRifleWeapon::MakeShot, TimeBetweenShots, true);
     this->MakeShot();
@@ -35,7 +41,9 @@ void ASTMRifleWeapon::StopFire()
 
 void ASTMRifleWeapon::MakeShot()
 {
-    if (!GetWorld() || IsAmmoEmpty())
+    const auto StmCharacter = Cast<ASTMPlayerCharacter>(GetOwner());
+
+    if (!GetWorld() || IsAmmoEmpty() || (StmCharacter && StmCharacter->IsRunning()))
     {
         this->StopFire();
         return;
